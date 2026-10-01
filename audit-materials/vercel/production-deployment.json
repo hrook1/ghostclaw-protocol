@@ -1,0 +1,17 @@
+{
+  "capturedAt": "2026-08-04T10:41:00Z",
+  "project": "ghostclaw-confidential-payments",
+  "plan": "Hobby",
+  "productionOrigin": "https://ghostclaw-confidential-payments.vercel.app",
+  "deploymentId": "[REDACTED FOR PUBLIC EXPORT]",
+  "deploymentOrigin": "https://ghostclaw-confidential-payments-mkwy5k4zl.vercel.app",
+  "status": "ready",
+  "region": "iad1",
+  "sharedRedisConnected": true,
+  "secretValuesIncluded": false,
+  "publicExportRedactions": {
+    "fields": ["deploymentId"],
+    "reason": "Internal provider identifier removed for public source publication.",
+    "recordStatus": "Redacted historical record; not an unmodified attestation."
+  }
+}

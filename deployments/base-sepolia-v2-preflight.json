@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "checkedAt": "2026-08-03T14:24:00.691Z",
+  "status": "verified-existing-base-sepolia-deployment",
+  "chainId": 84532,
+  "operator": "0x7BD10Aa7D3f176c87B236f0b057283d62220b2F4",
+  "primaryBlock": "44999328",
+  "independentBlock": "44999328",
+  "independentRpcMatched": true,
+  "canonicalCreate2DeployerMatched": true,
+  "setupManifestSha256": "a69b232f8b887b323908b0dc5f29baa474b1b230bb773c58fd53ef554f125803",
+  "ignitionSha256": "3718ffbed583d8a279ccb2545196d5618e3fd97512b65aa051d2ebd0f57fb999",
+  "targetContracts": {
+    "gUSD": {
+      "address": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 1726,
+      "expectedRuntimeHash": "0x47326a4fff0b37a672ada529bae9e1a1459271d47e50796a56cb4041df5f55fb",
+      "artifactSha256": "35555b2e5464c6ea4d36416ce31e98ce95477ba326e2d1765e3ce9654dd971a7"
+    },
+    "identityVerifier": {
+      "address": "0x886c99F83E741337c947586C423117E7F26a728a",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 7234,
+      "expectedRuntimeHash": "0x3476c585fd48de305133b7d962196d90a4bef2c444fe5b072f837fe63e0a3260",
+      "artifactSha256": "049b157738116094f398767e14d406ade03fb650a350cfd5fa1c177f206c5e83"
+    },
+    "depositVerifier": {
+      "address": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 7234,
+      "expectedRuntimeHash": "0xae2c044d83ab5fd5163075e8df58dee7b8c80a6346e3755a84faf71e55ccd1e6",
+      "artifactSha256": "80b072fb0c43a0eaea83378e32a9370b3bcaeb0be5d4acbea044d2cd8cc87a6c"
+    },
+    "spendVerifier": {
+      "address": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 7234,
+      "expectedRuntimeHash": "0x27ae3bb245686b6731911ebcf9c2760cdee8d6189e10de514b29efa0e4b4e757",
+      "artifactSha256": "0690cfcf12c3215335bc8b4f5528dbc6b65087fa1319c766568de95014d801c3"
+    },
+    "withdrawVerifier": {
+      "address": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 7229,
+      "expectedRuntimeHash": "0x978985616131fdfee5d35001574acf8dad96db9f502a70440f99256e8b62352e",
+      "artifactSha256": "15d379a824450d00ab2d2d7818ecfe620e5f7ad99dcde060480c3351d2e1f897"
+    },
+    "poseidon2": {
+      "address": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 7585,
+      "expectedRuntimeHash": "0x9d60f1447bfdfe1214a05574c13834688502d523dd76334b33d808473c5e7b97",
+      "artifactSha256": "fad10a451ae716459df64c4b481f48a545d6cd1b9400cce75d856e448f4ff54b"
+    },
+    "pool": {
+      "address": "0x415330497f132e8D811b80c3EB96eb15B985f3C6",
+      "state": "exact-runtime-present",
+      "expectedRuntimeBytes": 12558,
+      "expectedRuntimeHash": "0x71a85f494ad319d4a0c88dbf5b822a8671095a70577cd8d52e513703e37e8104",
+      "artifactSha256": "4ae6d14b5859336d4dcfe9605dbbb5d0e15a32e759c54fd9ea736a96ea1ab9ac"
+    }
+  },
+  "policyEnvironmentConfigured": {
+    "deployment": true,
+    "publicRelay": true,
+    "agent": true,
+    "facilitator": true
+  }
+}

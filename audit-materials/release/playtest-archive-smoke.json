@@ -1,0 +1,39 @@
+{
+  "testedAt": "2026-08-04T11:29:30Z",
+  "version": "1.4.2",
+  "network": "Base Sepolia",
+  "smokeTestedArchiveSha256": "48e1e9530c1aed3a3a14c8ac2ebebdc2e7658647ca5952428f964210848d71b9",
+  "finalArchiveSha256": "2c2c2f367b870a577a4f2f0dea5e66fc64681cc05032698d574ff6cf1887794c",
+  "smokeTestedCodeCommit": "f5fd0946dd67dd7345c03493f9d906a55019d531",
+  "finalTagCommit": "36a7b5fd7046e9b20735d146e64d7d037abaa5fc",
+  "finalChangeAfterSmoke": "operator-generated source-verification record only",
+  "checks": {
+    "archiveChecksum": true,
+    "fileChecksums": true,
+    "cosignBundle": true,
+    "cleanInstall": true,
+    "sponsoredRegistration": true,
+    "sponsoredFaucetClaim": true,
+    "sponsoredDeposit": true,
+    "localDepositProof": true,
+    "sponsoredConfidentialPayment": true,
+    "merchantSettlementVerification": true,
+    "merchantNoteImport": true,
+    "sponsoredEmergencyUndelegation": true
+  },
+  "transactions": {
+    "registration": "0x093965507b59fdcffcc1e8828dc5fddb87ebb2e49c9e39f49534eca83c850684",
+    "faucetClaim": "0xf904d37886adb7f29ef6f4e8ef530584d03c8d66439881fcc8e3844ec7311e5a",
+    "deposit": "0xd7b7eee9b52f0ca27b85d56eaa7dd9cd4af7ff440aacfc66fc63f952f2336b5c",
+    "confidentialPayment": "0xa9cba33b4444842b84292678812a1a30195e139c1e25c3d2daa6ad23da9c3907",
+    "emergencyUndelegation": "0x0bef089c7024532176773d78effe0cbda02f3fb9cb24a4207e24302df953e1bb"
+  },
+  "prePublicationIssue": {
+    "found": "The public Base RPC rejected a 10,000-block log query.",
+    "stateChanged": false,
+    "fix": "The wallet now requests at most 2,000 inclusive blocks.",
+    "regressionTestAdded": true,
+    "correctedDepositConfirmed": true
+  },
+  "secretsIncluded": false
+}

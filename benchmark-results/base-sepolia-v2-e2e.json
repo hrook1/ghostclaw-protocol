@@ -1,0 +1,236 @@
+{
+  "version": 2,
+  "generatedAt": "2026-08-04T10:27:19.394Z",
+  "chainId": 84532,
+  "status": "verified-live-testnet-only",
+  "productionSafe": false,
+  "model": "depth-20-append-only-note-tree",
+  "startingLeafCount": 10,
+  "proofSystem": "Consensys gnark PLONK on BN254",
+  "universalSrs": "Aztec Ignition",
+  "projectSpecificCeremony": false,
+  "contracts": {
+    "gUSD": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+    "identityVerifier": "0x886c99F83E741337c947586C423117E7F26a728a",
+    "depositVerifier": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+    "spendVerifier": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+    "withdrawVerifier": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+    "poseidon2": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+    "pool": "0x415330497f132e8D811b80c3EB96eb15B985f3C6"
+  },
+  "accounts": {
+    "payer": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+    "merchant": "0x12EC22D682FfeFF431148a074f0519DD8c8dee25"
+  },
+  "quote": {
+    "source": "Coinbase ETH-USD spot API",
+    "capturedAt": "2026-08-04T10:26:41.344Z",
+    "usdPerEth": 1855.235
+  },
+  "proofTimesMs": {
+    "identity": 134.879,
+    "deposit": 164.865,
+    "payment": 833.995,
+    "withdrawal": 556.553
+  },
+  "nativeVerifyTimesMs": {
+    "identity": 1.594,
+    "deposit": 1.687,
+    "payment": 1.967,
+    "withdrawal": 1.92
+  },
+  "proofBytes": 768,
+  "verifierGas": {
+    "identity": "301390",
+    "deposit": "302650",
+    "payment": "312279",
+    "withdrawal": "307435"
+  },
+  "actions": {
+    "registerPayer": {
+      "transactionHash": "0x864bb7c38ec93e13523756c753715adbd6e77894cb0bc063329f1949d5ca6476",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a3417853919bc009ebdc6c6edb601bf5856d5fb1f79791d525e34ec34265910963d",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3848.73,
+      "contractCallGasEstimate": "502444",
+      "cost": {
+        "gasUsed": "623584",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "3180278400000",
+        "l1DataFeeWei": "67877887516",
+        "totalFeeWei": "3248156287516",
+        "totalFeeEth": "0.000003248156287516",
+        "mainnetEquivalentUsd": 0.00602609
+      }
+    },
+    "registerMerchant": {
+      "transactionHash": "0xed4984abe9058509b12e45fa24db2559dc8eba163204ed0ea5cd5185c8781cf5",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a342c2bda50fbafe0620965675128ad8c4bc44c920906368eceeccbda12d76a6797",
+      "account": "0x12EC22D682FfeFF431148a074f0519DD8c8dee25",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3999.81,
+      "contractCallGasEstimate": "502444",
+      "cost": {
+        "gasUsed": "623596",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "3180339600000",
+        "l1DataFeeWei": "67444959305",
+        "totalFeeWei": "3247784559305",
+        "totalFeeEth": "0.000003247784559305",
+        "mainnetEquivalentUsd": 0.0060254
+      }
+    },
+    "faucet": {
+      "transactionHash": "0xf4ac9005c1bd40ee6f713974d7ecda98d64bd347505aeed61390f5ec8378e129",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a34b27bf9b62a6f2ee58152b1eecf92c1a017c40ef0edba728b279cf35217261d6a",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3791.12,
+      "contractCallGasEstimate": "73766",
+      "cost": {
+        "gasUsed": "158161",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "806621100000",
+        "l1DataFeeWei": "22678606213",
+        "totalFeeWei": "829299706213",
+        "totalFeeEth": "0.000000829299706213",
+        "mainnetEquivalentUsd": 0.00153855
+      }
+    },
+    "approve": {
+      "transactionHash": "0xf351fc925665a148b484bd609a7089bc16ea529d4de35a45e58d007bb3856ba4",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a34ae6b9b28bf7c07093b87e73359b419e3f554bb6b9bb77882571cd5c4126ed788",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3511.2,
+      "contractCallGasEstimate": "46516",
+      "cost": {
+        "gasUsed": "131508",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "670690800000",
+        "l1DataFeeWei": "24641736351",
+        "totalFeeWei": "695332536351",
+        "totalFeeEth": "0.000000695332536351",
+        "mainnetEquivalentUsd": 0.00129001
+      }
+    },
+    "deposit": {
+      "transactionHash": "0x64e6b5909869f61241fe2dab8c2a2be5e5d025df2e1e13de35ef37deede5feba",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a34addd0b1ab4fbd20f3f68829e1ffe4954165d68cb5e1873c93b3e4ae4bb0dde4c",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3666.87,
+      "contractCallGasEstimate": "1061802",
+      "cost": {
+        "gasUsed": "1132739",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "5776968900000",
+        "l1DataFeeWei": "64787747663",
+        "totalFeeWei": "5841756647663",
+        "totalFeeEth": "0.000005841756647663",
+        "mainnetEquivalentUsd": 0.01083783
+      }
+    },
+    "payment": {
+      "transactionHash": "0x7256b4dfb7b6e2e36600c428a45d145e300a1f006186092970dc104074e29819",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a34adf24cff6437ae342ddc59decfcc900bf842da146cb56b46000542e9760b9ce7",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3499.16,
+      "contractCallGasEstimate": "1119673",
+      "cost": {
+        "gasUsed": "1195268",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "6095866800000",
+        "l1DataFeeWei": "73818146296",
+        "totalFeeWei": "6169684946296",
+        "totalFeeEth": "0.000006169684946296",
+        "mainnetEquivalentUsd": 0.01144622
+      }
+    },
+    "withdrawal": {
+      "transactionHash": "0xc595ef36cf144a2ea85e46070d4b85ef6ab4083df5608ccca3e274bebebee378",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a340b99656ba7dd59d99559199f3cf71593c512cd5c47e0da8efd904d088c919633",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3619.44,
+      "contractCallGasEstimate": "1227812",
+      "cost": {
+        "gasUsed": "1302449",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "6642489900000",
+        "l1DataFeeWei": "70250230955",
+        "totalFeeWei": "6712740130955",
+        "totalFeeEth": "0.000006712740130955",
+        "mainnetEquivalentUsd": 0.01245371
+      }
+    },
+    "requestRecovery": {
+      "transactionHash": "0xc86547dc9c4a3d85f85964c65cfee25293d05d5479b2d3a31279043ccbcf9d07",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a34b1badf8d350cd71901bb8d2fec68fa6903b7fc4c123f368f7d169d5cddf7e3d0",
+      "account": "0xf151872a609B521802AE38c04De91d00a4567C9E",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3746.23,
+      "contractCallGasEstimate": "544322",
+      "cost": {
+        "gasUsed": "665497",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "3394034700000",
+        "l1DataFeeWei": "72864002976",
+        "totalFeeWei": "3466898702976",
+        "totalFeeEth": "0.000003466898702976",
+        "mainnetEquivalentUsd": 0.00643191
+      }
+    },
+    "cancelRecovery": {
+      "transactionHash": "0x731a48f1d359330eb9f7c7cd6dd825abc46dc17ba82e3a8514bb954e8e6b3cc0",
+      "callId": "0x0000000000000000000000000000000000000000000000000000000000014a3402aef98254f48d678731eb4578ed060c918096d15072921dff491f1e41616a24",
+      "account": "0x95008132FFc4f0D157E1d3Dcf2F043BAd56A57F6",
+      "sponsored": true,
+      "status": "confirmed",
+      "confirmationMs": 3643.52,
+      "contractCallGasEstimate": "46987",
+      "cost": {
+        "gasUsed": "112739",
+        "effectiveGasPriceWei": "5100000",
+        "l2ExecutionFeeWei": "574968900000",
+        "l1DataFeeWei": "24631637862",
+        "totalFeeWei": "599600537862",
+        "totalFeeEth": "0.000000599600537862",
+        "mainnetEquivalentUsd": 0.0011124
+      }
+    }
+  },
+  "merchantAcceptance": {
+    "accepted": true,
+    "replayRejected": true,
+    "paymentIntent": "5814710478868809684907872410126972950472054043434309103200745328110324857087",
+    "transactionHash": "0x7256b4dfb7b6e2e36600c428a45d145e300a1f006186092970dc104074e29819",
+    "recipientCommitment": "18018561007179017822037643963962928496785069066558424662395180567606975346993",
+    "root": "20150757242625471989449286708369395194480711290165951654416132387986582653787",
+    "confirmations": 1
+  },
+  "recoveryAcceptance": {
+    "requested": true,
+    "sevenDayDelayObserved": true,
+    "cancelledByCurrentAccount": true,
+    "proposedAccount": "0xf151872a609B521802AE38c04De91d00a4567C9E"
+  },
+  "observedState": {
+    "paymentIntentSettled": true,
+    "depositNullifierSpent": true,
+    "withdrawalNullifierSpent": true,
+    "currentRoot": "2727555489157237140949755087874027950728384702213691215514955193676071521817",
+    "totalEscrowed": "490000000",
+    "poolTokenBalance": "490000000"
+  }
+}

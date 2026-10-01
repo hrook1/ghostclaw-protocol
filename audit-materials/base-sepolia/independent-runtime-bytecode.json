@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-08-03T14:24:00.691Z",
+  "chainId": 84532,
+  "primaryBlock": 44999328,
+  "independentBlock": 44999328,
+  "independentRpcMatched": true,
+  "contracts": {
+    "gUSD": {
+      "address": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+      "runtimeBytes": 1726,
+      "runtimeKeccak256": "0x47326a4fff0b37a672ada529bae9e1a1459271d47e50796a56cb4041df5f55fb"
+    },
+    "identityVerifier": {
+      "address": "0x886c99F83E741337c947586C423117E7F26a728a",
+      "runtimeBytes": 7234,
+      "runtimeKeccak256": "0x3476c585fd48de305133b7d962196d90a4bef2c444fe5b072f837fe63e0a3260"
+    },
+    "depositVerifier": {
+      "address": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+      "runtimeBytes": 7234,
+      "runtimeKeccak256": "0xae2c044d83ab5fd5163075e8df58dee7b8c80a6346e3755a84faf71e55ccd1e6"
+    },
+    "spendVerifier": {
+      "address": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+      "runtimeBytes": 7234,
+      "runtimeKeccak256": "0x27ae3bb245686b6731911ebcf9c2760cdee8d6189e10de514b29efa0e4b4e757"
+    },
+    "withdrawVerifier": {
+      "address": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+      "runtimeBytes": 7229,
+      "runtimeKeccak256": "0x978985616131fdfee5d35001574acf8dad96db9f502a70440f99256e8b62352e"
+    },
+    "poseidon2": {
+      "address": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+      "runtimeBytes": 7585,
+      "runtimeKeccak256": "0x9d60f1447bfdfe1214a05574c13834688502d523dd76334b33d808473c5e7b97"
+    },
+    "pool": {
+      "address": "0x415330497f132e8D811b80c3EB96eb15B985f3C6",
+      "runtimeBytes": 12558,
+      "runtimeKeccak256": "0x71a85f494ad319d4a0c88dbf5b822a8671095a70577cd8d52e513703e37e8104"
+    }
+  }
+}

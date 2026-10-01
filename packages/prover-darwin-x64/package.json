@@ -1,0 +1,12 @@
+{
+  "name": "@ghostclaw/prover-darwin-x64",
+  "version": "1.5.7",
+  "description": "GhostClaw gnark prover for macOS Intel.",
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "git+https://github.com/hrook1/ghostclaw-protocol.git" },
+  "publishConfig": { "access": "public" },
+  "os": ["darwin"],
+  "cpu": ["x64"],
+  "files": ["bin/", "checksums.json"],
+  "engines": { "node": ">=22" }
+}

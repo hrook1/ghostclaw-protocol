@@ -1,0 +1,18 @@
+{
+  "capturedAt": "2026-08-04T10:42:57Z",
+  "provider": "Alchemy Gas Manager",
+  "policyName": "GhostClaw Base Sepolia Agent",
+  "policyId": "[REDACTED]",
+  "network": "Base Sepolia",
+  "drill": {
+    "initialStatus": "active",
+    "shutdownStatus": "inactive",
+    "inactivePolicyRejectedSponsoredCall": true,
+    "rejectedWalletStateChanged": false,
+    "restoredStatus": "active",
+    "restoredPolicySponsoredCall": true,
+    "testWalletEmergencyExitConfirmed": true
+  },
+  "finalStatus": "active",
+  "secretValuesIncluded": false
+}

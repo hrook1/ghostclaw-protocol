@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "status": "verified",
+  "checkedAt": "2026-08-04T10:41:27.085Z",
+  "chainId": 84532,
+  "account": "0x100526B50d4213c9589BFd37ed5B7cdC15B2817d",
+  "finalDelegation": "none",
+  "writes": [
+    {
+      "action": "delegate",
+      "transactionHash": "0xdd9eac83b526a2e19877d0644d212b9e336e970b6bf521ffe60e1cd10b8350fb"
+    },
+    {
+      "action": "undelegate",
+      "transactionHash": "0x114add948e347092dcfb57e6cdde81a623cb6b83c7ae99cd809c8f357e7ded85"
+    },
+    {
+      "action": "redelegate",
+      "transactionHash": "0x8785085ac807562a97748accefaa2a9ad15541321d655d319dd33d11a94c26f1"
+    },
+    {
+      "action": "final-undelegate",
+      "transactionHash": "0xeda47d994e86424fbd5bc2076017c633327f9b80ce4853f5ee751b1b6a7eeeaa"
+    }
+  ]
+}

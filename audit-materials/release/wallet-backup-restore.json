@@ -1,0 +1,12 @@
+{
+  "testedAt": "2026-08-04T10:48:30Z",
+  "version": "1.4.2",
+  "walletFormat": "v2",
+  "backupCreated": true,
+  "backupVerified": true,
+  "isolatedRestoreCompleted": true,
+  "restoredAccountMatched": true,
+  "restoredOwnerMatched": true,
+  "passphraseIncluded": false,
+  "walletSecretsIncluded": false
+}

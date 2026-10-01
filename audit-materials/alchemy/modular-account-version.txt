@@ -1,0 +1,6 @@
+Alchemy SemiModularAccount7702
+Release: v2.0.0
+Source commit: bd75c9eca7ff5a66aaebc3cf2dab43ddc4622482
+Base Sepolia address: 0x69007702764179f14F51cdce752f4f775d74E139
+Runtime bytes: 23741
+Runtime Keccak-256: 0xecfc0328ce4d953a4d452e11f54b578fa2d7f2f8126246d1120ca24d11845081

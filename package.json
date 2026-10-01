@@ -1,0 +1,119 @@
+{
+  "name": "ghostclaw",
+  "version": "1.5.7",
+  "description": "Confidential x402 payments for autonomous agents on Base.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrook1/ghostclaw-protocol.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "bin": {
+    "ghostclaw": "scripts/ghostclaw.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./mcp": "./scripts/mcp-server.mjs",
+    "./merchant": "./packages/merchant-core/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "scripts/ghostclaw.mjs",
+    "scripts/mcp-server.mjs",
+    "scripts/lib/agent-policy.mjs",
+    "scripts/lib/alchemy-adapter.mjs",
+    "scripts/lib/artifact-installer.mjs",
+    "scripts/lib/artifact-manifest.mjs",
+    "scripts/lib/connect-client.mjs",
+    "scripts/lib/doctor.mjs",
+    "scripts/lib/file-security.mjs",
+    "scripts/lib/local-runtime.mjs",
+    "scripts/lib/merchant-wallet.mjs",
+    "scripts/lib/native-prover.mjs",
+    "scripts/lib/onboarding.mjs",
+    "scripts/lib/paths.mjs",
+    "scripts/lib/playtest-credit.mjs",
+    "scripts/lib/protocol.mjs",
+    "scripts/lib/prover.mjs",
+    "scripts/lib/settlement.mjs",
+    "scripts/lib/sponsorship-policy.mjs",
+    "scripts/lib/state.mjs",
+    "scripts/lib/terminal.mjs",
+    "scripts/lib/transaction-signer.mjs",
+    "scripts/lib/tree-sync.mjs",
+    "scripts/lib/x402-client.mjs",
+    "src/index.mjs",
+    "packages/merchant-core/index.mjs",
+    "README.md",
+    "VERSION"
+  ],
+  "engines": {
+    "node": "22.x"
+  },
+  "ghostclaw": {
+    "nativeRuntimeRelease": "1.5.4"
+  },
+  "scripts": {
+    "check:repository": "node scripts/check-repository.mjs",
+    "check:secrets": "sh scripts/check-secrets.sh",
+    "test:repository": "node --test scripts/check-repository.test.mjs",
+    "site:docs": "node site/scripts/generate-docs.mjs",
+    "ghostclaw": "node scripts/ghostclaw.mjs",
+    "setup:wallet": "node scripts/ghostclaw.mjs init",
+    "doctor": "node scripts/ghostclaw.mjs doctor",
+    "connect:agents": "node scripts/ghostclaw.mjs connect auto",
+    "mcp": "node scripts/ghostclaw.mjs mcp",
+    "relay": "node scripts/relay.mjs",
+    "monitor:sponsorship": "node scripts/sponsorship-monitor.mjs",
+    "verify:live": "node scripts/verify-live-demo.mjs",
+    "verify:hosted": "node scripts/verify-live-demo.mjs",
+    "verify:hosted-payment": "node scripts/verify-hosted-payment.mjs",
+    "verify:guided-start": "node scripts/verify-guided-start.mjs",
+    "verify:base": "node --import tsx scripts/verify-base-sepolia.ts",
+    "verify:artifacts": "./scripts/verify-reproducible-artifacts.sh",
+    "verify:alchemy": "./scripts/verify-alchemy-delegation.sh",
+    "verify:redis": "node scripts/verify-redis-limits.mjs",
+    "verify:undelegation": "node scripts/verify-undelegation.mjs",
+    "test:e2e": "node --import tsx scripts/e2e-base-sepolia.ts",
+    "benchmark": "node scripts/ghostclaw.mjs benchmark --iterations 20",
+    "build:runtime": "./scripts/build-packaged-runtime.sh",
+    "build:native": "node scripts/build-native-package.mjs",
+    "stage:artifacts": "node scripts/stage-artifacts.mjs",
+    "verify:public-artifacts": "node scripts/verify-public-artifacts.mjs",
+    "provision:demo-merchant": "node scripts/provision-demo-merchant.mjs --confirm-testnet",
+    "spike:standard-x402": "node scripts/inspect-standard-x402.mjs",
+    "test:adapter": "node --test scripts/*.test.mjs src/*.test.mjs packages/*/*.test.mjs",
+    "test:package": "node scripts/package-layout.test.mjs && npm pack --dry-run --cache .ghostclaw/npm-cache",
+    "test:release": "npm run check:repository && npm test && npm run test:package",
+    "test:go": "go test ./... && go test -race ./... && go vet ./...",
+    "test:contracts": "forge fmt --check && forge build --sizes && forge test --offline",
+    "test:security": "npm audit --omit=dev && go run golang.org/x/vuln/cmd/govulncheck@v1.6.0 ./...",
+    "test:full": "npm run test:release && npm run verify:public-artifacts && npm run test:go && npm run test:contracts && npm run test:security && npm run verify:artifacts",
+    "test": "npm run test:adapter"
+  },
+  "optionalDependencies": {
+    "@ghostclaw/prover-darwin-arm64": "1.5.4",
+    "@ghostclaw/prover-darwin-x64": "1.5.4",
+    "@ghostclaw/prover-linux-arm64": "1.5.4",
+    "@ghostclaw/prover-linux-x64": "1.5.4",
+    "@ghostclaw/prover-win32-x64": "1.5.4"
+  },
+  "dependencies": {
+    "@alchemy/smart-accounts": "5.0.6",
+    "@alchemy/wallet-apis": "5.0.0-beta.28",
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@napi-rs/keyring": "1.3.0",
+    "qrcode-terminal": "0.12.0",
+    "viem": "2.55.2",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@alchemy/aa-infra": "5.0.6",
+    "@alchemy/common": "5.0.6",
+    "ethers": "6.17.0",
+    "tsx": "4.23.1"
+  }
+}

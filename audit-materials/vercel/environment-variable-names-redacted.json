@@ -1,0 +1,21 @@
+{
+  "capturedAt": "2026-08-03T21:46:48Z",
+  "configuredNames": [
+    "ALCHEMY_API_KEY",
+    "ALCHEMY_AGENT_GAS_POLICY_ID",
+    "GHOSTCLAW_RATE_LIMIT_KEY_SECRET",
+    "GHOSTCLAW_SIMULATION_RPC_URL",
+    "GHOSTCLAW_SPONSOR_CALLBACK_TOKEN",
+    "UPSTASH_REDIS_REST_KV_REST_API_READ_ONLY_TOKEN",
+    "UPSTASH_REDIS_REST_KV_REST_API_TOKEN",
+    "UPSTASH_REDIS_REST_KV_REST_API_URL",
+    "UPSTASH_REDIS_REST_KV_URL",
+    "UPSTASH_REDIS_REST_REDIS_URL"
+  ],
+  "pendingNames": [],
+  "environments": [
+    "Production",
+    "Preview"
+  ],
+  "secretValuesIncluded": false
+}

@@ -1,0 +1,16 @@
+{
+  "capturedAt": "2026-08-03T15:00:00Z",
+  "provider": "Alchemy Gas Manager",
+  "network": "Base Sepolia",
+  "policyName": "GhostClaw Base Sepolia Agent",
+  "policyId": "[REDACTED]",
+  "status": "active",
+  "limits": {
+    "totalUsd": 5,
+    "perWalletUsd": 1,
+    "perTransactionUsd": 0.1,
+    "totalTransactions": 1000,
+    "perWalletTransactions": 100
+  },
+  "secretValuesIncluded": false
+}

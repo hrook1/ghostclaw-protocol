@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-08-04T10:50:00Z",
+  "source": "Vercel production logs",
+  "deploymentHost": "ghostclaw-confidential-payments.vercel.app",
+  "samples": [
+    {
+      "time": "2026-08-04T10:39:36.400Z",
+      "method": "POST",
+      "route": "/rpc",
+      "status": 200
+    },
+    {
+      "time": "2026-08-04T10:39:36.860Z",
+      "method": "POST",
+      "route": "/alchemy/sponsor",
+      "status": 200
+    },
+    {
+      "time": "2026-08-04T10:39:45.110Z",
+      "method": "POST",
+      "route": "/rpc",
+      "status": 200
+    }
+  ],
+  "requestBodiesIncluded": false,
+  "addressesIncluded": false,
+  "ipAddressesIncluded": false,
+  "secretsIncluded": false
+}

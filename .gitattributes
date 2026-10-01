@@ -1,0 +1,10 @@
+public-parameters/*.dat binary
+third_party/**/*.tar.gz binary
+/downloads export-ignore
+
+# Keep generated proof output out of the default code review view.
+contracts/generated/** linguist-generated=true
+public/proving/** linguist-generated=true
+site/docs/** linguist-generated=true
+site/docs.html linguist-generated=true
+third_party/** linguist-vendored=true

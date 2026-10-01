@@ -1,0 +1,12 @@
+{
+  "name": "@ghostclaw/prover-linux-arm64",
+  "version": "1.5.7",
+  "description": "GhostClaw gnark prover for Linux ARM64.",
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "git+https://github.com/hrook1/ghostclaw-protocol.git" },
+  "publishConfig": { "access": "public" },
+  "os": ["linux"],
+  "cpu": ["arm64"],
+  "files": ["bin/", "checksums.json"],
+  "engines": { "node": ">=22" }
+}

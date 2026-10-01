@@ -1,0 +1,24 @@
+{
+  "capturedAt": "2026-08-03T21:46:48Z",
+  "provider": "Upstash for Redis through Vercel Marketplace",
+  "database": "[REDACTED FOR PUBLIC EXPORT]",
+  "status": "available",
+  "plan": "Free",
+  "monthlyCommandLimit": 500000,
+  "primaryRegion": "iad1",
+  "readRegions": [],
+  "eviction": false,
+  "connectedProject": "ghostclaw-confidential-payments",
+  "environments": [
+    "Production",
+    "Preview"
+  ],
+  "environmentPrefix": "UPSTASH_REDIS_REST",
+  "credentialsMarkedSensitive": true,
+  "secretValuesIncluded": false,
+  "publicExportRedactions": {
+    "fields": ["database"],
+    "reason": "Internal database identifier removed for public source publication.",
+    "recordStatus": "Redacted historical record; not an unmodified attestation."
+  }
+}

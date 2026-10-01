@@ -1,0 +1,39 @@
+{
+  "capturedAt": "2026-08-03T15:28:41Z",
+  "name": "SemiModularAccount7702",
+  "version": "v2.0.0",
+  "source": {
+    "repository": "https://github.com/alchemyplatform/modular-account",
+    "tag": "v2.0.0",
+    "commit": "bd75c9eca7ff5a66aaebc3cf2dab43ddc4622482",
+    "archive": "third_party/alchemy-modular-account-v2/source-v2.0.0.tar.gz",
+    "archiveSha256": "ffafa6f2c08265d1a0eaea423709272d2c32aeeb217f4906d3c3426bac14b899",
+    "compiler": "Solidity 0.8.26",
+    "evmVersion": "paris",
+    "optimizerRuns": 50000,
+    "viaIr": true,
+    "bytecodeMetadata": false,
+    "completeSourceArchived": true,
+    "networkDownloadRequiredForBuild": false
+  },
+  "deployment": {
+    "network": "Base Sepolia",
+    "chainId": 84532,
+    "address": "0x69007702764179f14F51cdce752f4f775d74E139",
+    "runtimeBytes": 23741,
+    "runtimeKeccak256": "0xecfc0328ce4d953a4d452e11f54b578fa2d7f2f8126246d1120ca24d11845081",
+    "officialRegistry": "https://www.alchemy.com/docs/wallets/smart-contracts/deployed-addresses"
+  },
+  "ghostclawControls": {
+    "runtimeCheckedBeforeEverySponsoredWrite": true,
+    "delegationTargetPinned": true,
+    "emergencyUndelegationImplemented": true,
+    "liveUndelegationDrill": "verified-2026-08-04"
+  },
+  "sourceReproduction": {
+    "exactRuntimeMatch": true,
+    "command": "npm run verify:alchemy",
+    "evidence": "audit-materials/alchemy/delegation-runtime-reproduction.json"
+  },
+  "accountModuleExport": "single-owner-default-module-runtime-pinned"
+}

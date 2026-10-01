@@ -1,0 +1,47 @@
+{
+  "backend": "gnark PLONK KZG",
+  "curve": "BN254",
+  "gnark": "v0.15.0",
+  "ignition": {
+    "path": "public-parameters/bn254_g1.dat",
+    "sha256": "3718ffbed583d8a279ccb2545196d5618e3fd97512b65aa051d2ebd0f57fb999",
+    "transcriptG1Points": 131072,
+    "loadedG1Points": 32771,
+    "pairingChecks": 5
+  },
+  "circuits": {
+    "deposit": {
+      "name": "deposit",
+      "constraints": 2787,
+      "publicInputs": 4,
+      "canonicalSrsSize": 4099,
+      "lagrangeSrsSize": 4096,
+      "setupMilliseconds": 0
+    },
+    "identity": {
+      "name": "identity",
+      "constraints": 2392,
+      "publicInputs": 3,
+      "canonicalSrsSize": 4099,
+      "lagrangeSrsSize": 4096,
+      "setupMilliseconds": 0
+    },
+    "spend": {
+      "name": "spend",
+      "constraints": 17145,
+      "publicInputs": 10,
+      "canonicalSrsSize": 32771,
+      "lagrangeSrsSize": 32768,
+      "setupMilliseconds": 0
+    },
+    "withdraw": {
+      "name": "withdraw",
+      "constraints": 13776,
+      "publicInputs": 7,
+      "canonicalSrsSize": 16387,
+      "lagrangeSrsSize": 16384,
+      "setupMilliseconds": 0
+    }
+  },
+  "generatedAt": "1970-01-01T00:00:00Z"
+}

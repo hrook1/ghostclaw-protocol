@@ -1,0 +1,77 @@
+{
+  "protocol": "GhostClaw Confidential Payments v2",
+  "platform": "darwin/amd64",
+  "goVersion": "go1.25.12",
+  "iterations": 20,
+  "circuits": {
+    "deposit": {
+      "proofBytes": 768,
+      "proveMs": {
+        "min": 116.485,
+        "median": 130.787,
+        "p95": 175.707,
+        "max": 209.133,
+        "mean": 136.94310000000002
+      },
+      "verifyMs": {
+        "min": 1.499,
+        "median": 1.77,
+        "p95": 2.688,
+        "max": 3.624,
+        "mean": 1.9050000000000005
+      }
+    },
+    "identity": {
+      "proofBytes": 768,
+      "proveMs": {
+        "min": 113.235,
+        "median": 125.924,
+        "p95": 178.043,
+        "max": 202.587,
+        "mean": 132.23770000000002
+      },
+      "verifyMs": {
+        "min": 1.505,
+        "median": 2.031,
+        "p95": 3.28,
+        "max": 4.887,
+        "mean": 2.2679500000000004
+      }
+    },
+    "spend": {
+      "proofBytes": 768,
+      "proveMs": {
+        "min": 733.521,
+        "median": 782.863,
+        "p95": 838.869,
+        "max": 905.074,
+        "mean": 786.24375
+      },
+      "verifyMs": {
+        "min": 1.438,
+        "median": 1.9,
+        "p95": 2.86,
+        "max": 12.336,
+        "mean": 2.4288499999999997
+      }
+    },
+    "withdraw": {
+      "proofBytes": 768,
+      "proveMs": {
+        "min": 399.562,
+        "median": 422.36,
+        "p95": 463.344,
+        "max": 519.1,
+        "mean": 430.91245
+      },
+      "verifyMs": {
+        "min": 1.512,
+        "median": 2.013,
+        "p95": 2.985,
+        "max": 3.748,
+        "mean": 2.0981499999999995
+      }
+    }
+  },
+  "generatedAt": "2026-08-03T14:40:14Z"
+}

@@ -1,0 +1,8 @@
+GhostClaw release 1.4.2
+Checked: 2026-08-04T11:29:30Z
+Tag: v1.4.2
+Commit: 36a7b5fd7046e9b20735d146e64d7d037abaa5fc
+Identity: [personal email redacted; signing key fingerprint retained below]
+Key: SHA256:gagCufVD071/lnf6TI6QkMfQ0e+7cbSKR2SR4KxBiv0
+Command: git verify-tag v1.4.2
+Result: Good git signature.

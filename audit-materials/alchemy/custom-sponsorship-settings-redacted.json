@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-08-03T15:00:00Z",
+  "provider": "Alchemy Gas Manager",
+  "network": "Base Sepolia",
+  "policyName": "GhostClaw Base Sepolia Agent",
+  "policyId": "[REDACTED]",
+  "customRule": {
+    "url": "https://ghostclaw-confidential-payments.vercel.app/alchemy/sponsor",
+    "webhookDataAuthentication": true,
+    "sponsorOnErrorOrTimeout": false
+  },
+  "secretValuesIncluded": false
+}

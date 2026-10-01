@@ -1,0 +1,18 @@
+{
+  "capturedAt": "2026-08-04T10:42:57Z",
+  "provider": "Alchemy Gas Manager",
+  "policyName": "GhostClaw v1.4.2 Emergency Exit",
+  "policyId": "[REDACTED]",
+  "policyType": "Bundler Sponsored Operations",
+  "status": "active",
+  "network": "Base Sepolia",
+  "limits": {
+    "totalUsd": 1,
+    "perWalletUsd": 0.1,
+    "perTransactionUsd": 0.05,
+    "totalTransactions": 100,
+    "perWalletTransactions": 10
+  },
+  "relayRestriction": "signed-zero-address-eip-7702-authorization-only",
+  "secretValuesIncluded": false
+}

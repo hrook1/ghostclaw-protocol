@@ -1,0 +1,222 @@
+name: Publish npm packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact version from VERSION and package.json
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      artifact_release: ${{ steps.version.outputs.artifact_release }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - id: version
+        shell: bash
+        run: |
+          expected="$(tr -d '\r\n' < VERSION)"
+          package="$(node -p 'require("./package.json").version')"
+          artifact_release="$(node --input-type=module -e 'import { ARTIFACT_RELEASE } from "./scripts/lib/artifact-manifest.mjs"; process.stdout.write(ARTIFACT_RELEASE)')"
+          test "$expected" = "$package"
+          test "$expected" = "${{ inputs.version }}"
+          test "$GITHUB_REF_TYPE" = "tag"
+          test "$GITHUB_REF_NAME" = "v$expected"
+          git config gpg.format ssh
+          git config gpg.ssh.allowedSignersFile "$GITHUB_WORKSPACE/release/allowed_signers"
+          git verify-tag "$GITHUB_REF_NAME"
+          printf 'version=%s\n' "$expected" >> "$GITHUB_OUTPUT"
+          printf 'artifact_release=%s\n' "$artifact_release" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --global npm@11.19.0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.25.12
+          cache: true
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.7.1
+      - run: npm ci --ignore-scripts
+      - run: node scripts/build-native-package.mjs linux x64
+      - run: npm run test:release
+      - run: npm run verify:public-artifacts
+      - run: npm audit --omit=dev
+      - run: go test ./...
+      - run: go test -race ./...
+      - run: go vet ./...
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.6.0 ./...
+      - run: forge fmt --check
+      - run: forge build --sizes
+      - run: forge test --offline
+      - run: ./scripts/verify-reproducible-artifacts.sh
+
+  native:
+    needs: verify
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            platform: darwin
+            arch: x64
+          - runner: macos-15
+            platform: darwin
+            arch: arm64
+          - runner: ubuntu-24.04
+            platform: linux
+            arch: x64
+          - runner: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+          - runner: windows-2025
+            platform: win32
+            arch: x64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: npm install --global npm@11.19.0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.25.12
+          cache: true
+      - run: node scripts/build-native-package.mjs ${{ matrix.platform }} ${{ matrix.arch }}
+      - run: node scripts/verify-native-package.mjs packages/prover-${{ matrix.platform }}-${{ matrix.arch }} ${{ matrix.platform }} ${{ matrix.arch }}
+      - name: Pack native package
+        shell: bash
+        run: |
+          mkdir -p release/packages
+          npm pack "./packages/prover-${{ matrix.platform }}-${{ matrix.arch }}" \
+            --pack-destination release/packages \
+            --cache .ghostclaw/npm-cache
+      - name: Test clean package installation
+        run: node scripts/test-native-install.mjs ${{ matrix.platform }} ${{ matrix.arch }}
+      - name: Test Linux private-group package permissions
+        if: matrix.platform == 'linux'
+        shell: bash
+        run: |
+          sudo useradd --create-home --user-group ghostclaw-package-test
+          test_source="/home/ghostclaw-package-test/source"
+          sudo mkdir -p "$test_source"
+          sudo cp -R . "$test_source"
+          sudo chown -R ghostclaw-package-test:ghostclaw-package-test "$test_source"
+          sudo -u ghostclaw-package-test -H node "$test_source/scripts/test-native-install.mjs" \
+            ${{ matrix.platform }} ${{ matrix.arch }} --group-write
+      - uses: actions/upload-artifact@v6
+        with:
+          name: prover-${{ matrix.platform }}-${{ matrix.arch }}
+          path: release/packages/*.tgz
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: [verify, native]
+    runs-on: ubuntu-24.04
+    environment: npm-release
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm install --global npm@11.19.0
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: prover-*
+          path: release/native-packages
+          merge-multiple: true
+      - run: npm ci --ignore-scripts
+      - run: npm run stage:artifacts
+      - name: Pack JavaScript packages
+        shell: bash
+        run: |
+          mkdir -p release/javascript-packages
+          npm pack --pack-destination release/javascript-packages --cache .ghostclaw/npm-cache
+          npm pack ./packages/express --pack-destination release/javascript-packages --cache .ghostclaw/npm-cache
+          npm pack ./packages/hono --pack-destination release/javascript-packages --cache .ghostclaw/npm-cache
+          npm pack ./packages/next --pack-destination release/javascript-packages --cache .ghostclaw/npm-cache
+          npm sbom --omit=dev --sbom-format=cyclonedx > "release/ghostclaw-${{ needs.verify.outputs.version }}.sbom.cdx.json"
+      - uses: sigstore/cosign-installer@v4.1.2
+      - name: Sign release files with GitHub OIDC
+        shell: bash
+        run: |
+          for artifact in \
+            release/native-packages/*.tgz \
+            release/javascript-packages/*.tgz \
+            public/proving/${{ needs.verify.outputs.artifact_release }}/ghostclaw-* \
+            "release/ghostclaw-${{ needs.verify.outputs.version }}.sbom.cdx.json"; do
+            cosign sign-blob --yes --bundle "${artifact}.sigstore.json" "$artifact"
+          done
+      - name: Publish source release evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          tag="v${{ needs.verify.outputs.version }}"
+          files=(
+            release/native-packages/*.tgz
+            release/native-packages/*.sigstore.json
+            release/javascript-packages/*.tgz
+            release/javascript-packages/*.sigstore.json
+            public/proving/${{ needs.verify.outputs.artifact_release }}/ghostclaw-*
+            "release/ghostclaw-${{ needs.verify.outputs.version }}.sbom.cdx.json"
+            "release/ghostclaw-${{ needs.verify.outputs.version }}.sbom.cdx.json.sigstore.json"
+          )
+          if gh release view "$tag" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            gh release upload "$tag" "${files[@]}" --clobber --repo "${{ github.repository }}"
+          else
+            gh release create "$tag" "${files[@]}" \
+              --repo "${{ github.repository }}" \
+              --verify-tag \
+              --title "GhostClaw ${{ needs.verify.outputs.version }}" \
+              --notes "Signed package release. npm publishes the same CI-built tarballs. Each release file has a keyless Sigstore bundle."
+          fi
+      - name: Publish native packages
+        shell: bash
+        run: |
+          publish_if_missing() {
+            local package_name="$1"
+            local archive="$2"
+            if npm view "${package_name}@${{ needs.verify.outputs.version }}" version >/dev/null 2>&1; then
+              echo "${package_name}@${{ needs.verify.outputs.version }} is already published"
+            else
+              npm publish "$archive" --access public
+            fi
+          }
+          publish_if_missing "@ghostclaw/prover-darwin-arm64" "release/native-packages/ghostclaw-prover-darwin-arm64-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/prover-darwin-x64" "release/native-packages/ghostclaw-prover-darwin-x64-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/prover-linux-arm64" "release/native-packages/ghostclaw-prover-linux-arm64-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/prover-linux-x64" "release/native-packages/ghostclaw-prover-linux-x64-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/prover-win32-x64" "release/native-packages/ghostclaw-prover-win32-x64-${{ needs.verify.outputs.version }}.tgz"
+      - name: Publish JavaScript packages
+        shell: bash
+        run: |
+          publish_if_missing() {
+            local package_name="$1"
+            local archive="$2"
+            if npm view "${package_name}@${{ needs.verify.outputs.version }}" version >/dev/null 2>&1; then
+              echo "${package_name}@${{ needs.verify.outputs.version }} is already published"
+            else
+              npm publish "$archive" --access public
+            fi
+          }
+          publish_if_missing "ghostclaw" "release/javascript-packages/ghostclaw-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/express" "release/javascript-packages/ghostclaw-express-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/hono" "release/javascript-packages/ghostclaw-hono-${{ needs.verify.outputs.version }}.tgz"
+          publish_if_missing "@ghostclaw/next" "release/javascript-packages/ghostclaw-next-${{ needs.verify.outputs.version }}.tgz"

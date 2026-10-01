@@ -1,0 +1,9 @@
+{
+  "status": "verified",
+  "concurrentInstances": 2,
+  "concurrentAttempts": 121,
+  "accepted": 120,
+  "rejected": 1,
+  "invalidCredentialFailedClosed": true,
+  "testedAt": "2026-08-04T10:25:11.305Z"
+}

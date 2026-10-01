@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-08-04T10:59:31.485Z",
+  "chainId": 84532,
+  "contract": "0x69007702764179f14F51cdce752f4f775d74E139",
+  "compilerArtifact": "out-optimized/SemiModularAccount7702.sol/SemiModularAccount7702.json",
+  "runtimeBytes": 23741,
+  "runtimeKeccak256": "0xecfc0328ce4d953a4d452e11f54b578fa2d7f2f8126246d1120ca24d11845081",
+  "immutableValues": {
+    "self": "0x69007702764179f14F51cdce752f4f775d74E139",
+    "entryPoint": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+    "executionInstallDelegate": "0x0000000000008e6a39E03C7156e46b238C9E2036"
+  },
+  "exactRuntimeMatch": true
+}

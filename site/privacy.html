@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GhostClaw privacy notice">
+<link rel="icon" id="site-favicon" type="image/svg+xml">
+<title>GHOSTCLAW — Privacy notice</title>
+<style>
+:root{--bg:#050812;--panel:#080d18;--paper:#eef4ff;--muted:#8692a7;--dim:#536078;--line:#1c2940;--blue:#91b8ff;--cyan:#b8e5ff;--red:#ff5a4e;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--paper);font-family:var(--sans);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}a:hover{color:var(--cyan)}::selection{background:var(--blue);color:var(--bg)}
+.topbar{position:sticky;z-index:20;top:0;height:68px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 28px;border-bottom:1px solid var(--line);background:rgba(5,8,18,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.brand{font:800 12px/1 var(--mono);letter-spacing:.2em}.brand b{color:var(--red)}.top-links{display:flex;gap:28px;font:700 9px/1 var(--mono);letter-spacing:.18em;color:var(--muted)}.release{justify-self:end;font:700 9px/1 var(--mono);letter-spacing:.16em;color:var(--blue)}
+.legal-shell{width:min(1120px,calc(100% - 48px));margin:0 auto;padding:72px 0 120px}.legal-hero{padding:18px 0 64px}.legal-kicker{font:700 9px/1 var(--mono);letter-spacing:.18em;color:var(--blue)}h1{max-width:11ch;margin:18px 0 26px;font:850 clamp(54px,8vw,96px)/.9 var(--sans);letter-spacing:-.06em;text-transform:uppercase}.legal-intro{max-width:55ch;margin:0;color:#aeb9ca;font-size:17px;line-height:1.7}.legal-meta{display:flex;gap:24px;margin-top:32px;padding-bottom:14px;border-bottom:1px solid var(--line);font:700 9px/1.4 var(--mono);letter-spacing:.16em;color:var(--dim)}.legal-meta b{color:var(--blue)}
+.legal-grid{display:grid;grid-template-columns:220px minmax(0,820px);gap:clamp(44px,6vw,100px)}.toc{position:sticky;top:104px;align-self:start;max-height:calc(100vh - 132px);overflow:auto;padding-right:18px}.toc b{display:block;margin-bottom:18px;font:700 9px/1 var(--mono);letter-spacing:.18em;color:var(--dim)}.toc a{display:block;padding:9px 10px;border-left:1px solid var(--line);font:600 10px/1.35 var(--mono);letter-spacing:.06em;color:var(--muted)}.toc a:hover{border-left-color:var(--blue);background:rgba(145,184,255,.06);color:var(--paper)}
+.legal-section{scroll-margin-top:104px;padding-bottom:72px}.legal-section+.legal-section{padding-top:18px;border-top:1px solid var(--line)}.section-id{font:700 9px/1.4 var(--mono);letter-spacing:.16em;color:var(--dim)}h2{max-width:14ch;margin:18px 0 22px;font:800 clamp(29px,4vw,44px)/1 var(--sans);letter-spacing:-.04em}h3{margin:42px 0 16px;font:700 13px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}.lead,.legal-section>p{max-width:64ch;margin:0 0 22px;color:#b8c2d3;font-size:16px;line-height:1.72}.lead{color:#d0d8e6}.legal-section ul{margin:0 0 26px;padding-left:24px}.legal-section li{color:#b8c2d3;font-size:16px;line-height:1.72}.legal-section li+li{margin-top:8px}
+.data-list,.rule-list{margin:28px 0;border-top:1px solid var(--line)}.data-row{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:17px 0;border-bottom:1px solid rgba(28,41,64,.7)}.data-row b{font:700 11px/1.35 var(--mono);letter-spacing:.04em}.data-row p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}.rule{display:grid;grid-template-columns:42px 150px minmax(0,1fr);gap:20px;padding:17px 0;border-bottom:1px solid rgba(28,41,64,.7)}.rule i{color:var(--dim);font:700 10px/1.35 var(--mono);font-style:normal}.rule b{font:700 11px/1.35 var(--mono);letter-spacing:.04em}.rule p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.callout{margin:28px 0;padding:4px 0 4px 20px;border-left:2px solid var(--blue)}.callout b{display:block;margin-bottom:10px;color:var(--blue);font:700 9px/1.4 var(--mono);letter-spacing:.16em}.callout p{margin:0;color:#c2d7f7;font-size:16px;line-height:1.72}.contact-link,.body-link{color:var(--blue);text-decoration:underline;text-decoration-color:rgba(145,184,255,.35);text-underline-offset:3px}
+footer{display:flex;justify-content:space-between;gap:24px;width:min(1120px,calc(100% - 48px));margin:0 auto 60px;padding-top:24px;border-top:1px solid var(--line);color:var(--dim);font:700 9px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:800px){.topbar{grid-template-columns:1fr auto;padding:0 18px}.top-links{display:none}.release{font-size:8px}.legal-shell{width:calc(100% - 36px);padding-top:38px}.legal-hero{padding-top:0}.legal-hero h1{font-size:44px;overflow-wrap:anywhere}.legal-grid{display:block}.toc{position:static;max-height:none;margin-bottom:52px;padding-right:0}.toc a{padding:10px}.legal-section{padding-bottom:56px}h2{font-size:32px}.lead,.legal-section>p,.legal-section li,.callout p{font-size:15px}.data-row{grid-template-columns:1fr;gap:8px}.rule{grid-template-columns:38px 1fr}.rule p{grid-column:2}footer{flex-direction:column;width:calc(100% - 36px)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="index.html"><b>◆</b> GHOSTCLAW / LEGAL</a><nav class="top-links"><a href="index.html">SITE</a><a href="https://www.ghostclaw.co/docs/index.html">DOCS</a><a href="privacy.html">PRIVACY</a><a href="terms.html">TERMS</a></nav><span class="release">PRIVACY NOTICE</span></header>
+
+<main class="legal-shell">
+  <header class="legal-hero">
+    <span class="legal-kicker">GHOSTCLAW // PRIVACY NOTICE</span>
+    <h1>GhostClaw privacy notice.</h1>
+    <p class="legal-intro">This notice explains what GhostClaw processes, why it processes it, and what stays on your device.</p>
+    <div class="legal-meta"><span><b>EFFECTIVE</b> 21 AUGUST 2026</span><span><b>VERSION</b> 1.0</span></div>
+  </header>
+
+  <div class="legal-grid">
+    <aside class="toc" aria-label="Privacy notice sections">
+      <b>CONTENTS</b>
+      <a href="#controller">01 / CONTROLLER</a>
+      <a href="#scope">02 / DATA</a>
+      <a href="#purpose">03 / PURPOSE</a>
+      <a href="#sharing">04 / SHARING</a>
+      <a href="#retention">05 / RETENTION</a>
+      <a href="#local">06 / LOCAL DATA</a>
+      <a href="#rights">07 / YOUR RIGHTS</a>
+      <a href="#contact">08 / CONTACT</a>
+    </aside>
+
+    <div>
+      <section class="legal-section" id="controller">
+        <span class="section-id">01 / CONTROLLER</span>
+        <h2>Who is responsible.</h2>
+        <p class="lead">GhostClaw is an unincorporated project operated from the United Kingdom. GhostClaw is the controller for the processing described here.</p>
+        <p>Contact GhostClaw at <a class="contact-link" href="mailto:ghostclaw@protonmail.com">ghostclaw@protonmail.com</a>.</p>
+      </section>
+
+      <section class="legal-section" id="scope">
+        <span class="section-id">02 / DATA</span>
+        <h2>What the system processes.</h2>
+        <div class="data-list">
+          <div class="data-row"><b>PUBLIC WEBSITE</b><p>The website host can process your IP address, browser details, requested page, time, and security logs. The site code sets no cookies and uses no analytics.</p></div>
+          <div class="data-row"><b>WAITLIST FORM</b><p>When you submit the landing-page form, GhostClaw and Basin process your email address and anti-spam form data.</p></div>
+          <div class="data-row"><b>ALPHA ACCESS</b><p>If you receive access, GhostClaw can process your email address, invitation identifier, access status, and legal acceptance record.</p></div>
+          <div class="data-row"><b>HOSTED SERVICES</b><p>Hosted services can process your IP address, public wallet address, public account identifier, request data, payment identifier, proof, signature, and settlement result.</p></div>
+          <div class="data-row"><b>REPORT SERVICE</b><p>The report service processes the public wallet address you request, public blockchain records, report status, and generated report.</p></div>
+          <div class="data-row"><b>SUPPORT</b><p>GhostClaw processes the contact details and message content that you send when you request support.</p></div>
+          <div class="data-row"><b>PUBLIC SOURCES</b><p>GhostClaw can obtain transaction data from public blockchain networks and public blockchain data providers.</p></div>
+        </div>
+        <div class="callout">
+          <b>PRIVATE DATA BOUNDARY</b>
+          <p>GhostClaw does not require you to send your wallet private key or private payment witness to its hosted services.</p>
+        </div>
+      </section>
+
+      <section class="legal-section" id="purpose">
+        <span class="section-id">03 / PURPOSE</span>
+        <h2>Why GhostClaw processes data.</h2>
+        <div class="data-list">
+          <div class="data-row"><b>PROVIDE THE ALPHA</b><p>GhostClaw processes access and service data to provide the private alpha. The lawful basis is contract or steps requested before a contract.</p></div>
+          <div class="data-row"><b>SECURE THE SERVICE</b><p>GhostClaw processes network and security data to prevent abuse, enforce limits, diagnose faults, and protect the service. The lawful basis is legitimate interests.</p></div>
+          <div class="data-row"><b>PROVIDE SUPPORT</b><p>GhostClaw processes support messages to answer requests and resolve faults. The lawful basis is contract or legitimate interests.</p></div>
+          <div class="data-row"><b>MEET LEGAL DUTIES</b><p>GhostClaw can process records when applicable law requires it. The lawful basis is legal obligation.</p></div>
+        </div>
+        <p>The legitimate interests are service security, fraud prevention, fault diagnosis, and responsible alpha operation.</p>
+      </section>
+
+      <section class="legal-section" id="sharing">
+        <span class="section-id">04 / SHARING</span>
+        <h2>Where data can go.</h2>
+        <p class="lead">GhostClaw uses service providers to host and operate the website and alpha. Relevant providers currently include Vercel, Basin, Upstash, Alchemy, and Blockscout.</p>
+        <ul>
+          <li>Vercel hosts the current GhostClaw service and can process request and security data.</li>
+          <li>Basin receives waitlist email addresses and form security data.</li>
+          <li>Upstash stores service state, rate-limit records, and hosted report records.</li>
+          <li>Alchemy provides blockchain infrastructure and can receive public account and transaction request data.</li>
+          <li>Blockscout can receive a public wallet address when the report service requests public transaction data.</li>
+          <li>Public blockchain networks receive data required for public verification and settlement.</li>
+          <li>Your selected AI provider can receive information that your agent sends through its own service.</li>
+          <li>A resource server receives the request data that your agent sends to that server.</li>
+        </ul>
+        <p>Some providers can process data outside the United Kingdom. GhostClaw relies on the provider's applicable transfer safeguards.</p>
+        <p>GhostClaw does not sell personal data.</p>
+      </section>
+
+      <section class="legal-section" id="retention">
+        <span class="section-id">05 / RETENTION</span>
+        <h2>How long data remains.</h2>
+        <div class="data-list">
+          <div class="data-row"><b>REPORTS</b><p>GhostClaw keeps hosted report requests and generated reports for no more than 30 days.</p></div>
+          <div class="data-row"><b>WAITLIST</b><p>GhostClaw keeps waitlist records until access administration no longer requires them or you ask GhostClaw to erase them.</p></div>
+          <div class="data-row"><b>SECURITY LIMITS</b><p>The current hosted rate limiter keeps short protected identifiers for its active rate-limit window.</p></div>
+          <div class="data-row"><b>ALPHA ACCESS</b><p>GhostClaw keeps access and acceptance records while access remains active. It can keep necessary records longer for legal claims or legal duties.</p></div>
+          <div class="data-row"><b>SUPPORT</b><p>GhostClaw keeps support records only while they are needed to resolve the request and manage related legal obligations.</p></div>
+          <div class="data-row"><b>HOST LOGS</b><p>Infrastructure providers keep operational and security logs under their own retention settings.</p></div>
+          <div class="data-row"><b>PUBLIC NETWORKS</b><p>Public blockchain records are permanent. GhostClaw cannot erase records controlled by a public network.</p></div>
+        </div>
+      </section>
+
+      <section class="legal-section" id="local">
+        <span class="section-id">06 / LOCAL DATA</span>
+        <h2>What stays with you.</h2>
+        <p class="lead">The local GhostClaw software stores encrypted wallet state, payment policy, payment records, configuration, and proving files on your device.</p>
+        <ul>
+          <li>The operating-system credential store can hold the key that protects local GhostClaw state.</li>
+          <li>Connected agent configuration can contain the local command and approved service settings.</li>
+          <li>The browser prototype can store Miden account state and a settlement journal in browser storage.</li>
+          <li>Local data remains until you remove it, clear the browser data, or remove the related configuration.</li>
+        </ul>
+        <p>Local storage is not the same as GhostClaw receiving that data. Other software on your device can have its own access rights.</p>
+      </section>
+
+      <section class="legal-section" id="rights">
+        <span class="section-id">07 / YOUR RIGHTS</span>
+        <h2>Your data rights.</h2>
+        <p class="lead">UK data-protection law can give you rights over personal data controlled by GhostClaw.</p>
+        <ul>
+          <li>Ask for a copy of your personal data.</li>
+          <li>Ask GhostClaw to correct inaccurate personal data.</li>
+          <li>Ask GhostClaw to erase personal data when the law applies.</li>
+          <li>Ask GhostClaw to restrict processing when the law applies.</li>
+          <li>Ask for portable data when the law applies.</li>
+          <li>Withdraw consent when consent is the lawful basis.</li>
+        </ul>
+        <div class="callout">
+          <b>RIGHT TO OBJECT</b>
+          <p>You can object to processing based on legitimate interests. GhostClaw will stop unless a lawful reason permits continued processing.</p>
+        </div>
+        <p>GhostClaw does not make solely automated decisions that have legal or similarly significant effects on you.</p>
+      </section>
+
+      <section class="legal-section" id="contact">
+        <span class="section-id">08 / CONTACT</span>
+        <h2>Questions and complaints.</h2>
+        <p class="lead">Send a privacy request to <a class="contact-link" href="mailto:ghostclaw@protonmail.com">ghostclaw@protonmail.com</a>. Include enough information for GhostClaw to identify the relevant record.</p>
+        <p>You can also complain to the UK Information Commissioner's Office. See <a class="body-link" href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noreferrer">ICO complaint guidance</a>.</p>
+        <h3>CHANGES TO THIS NOTICE</h3>
+        <p>GhostClaw can update this notice when the service or law changes. The page will show the new effective date and version.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>GHOSTCLAW // PRIVACY NOTICE // VERSION 1.0</span>
+  <span><a href="index.html">[ HOME ]</a> <a href="terms.html">[ ALPHA TERMS ]</a></span>
+</footer>
+
+<script>
+"use strict";
+const MASCOT=["......BBB......",".....BBBBB.....","C.C.BBBBBBB.C.C","CCC.BBEBBEB.CCC",".C..BBEBBEB..C.","..C.BBBBBBB.C..","...CBBBBBBBC...","....BBBBBBB....","....BBBBBBB....","....BBBBBBB....","....B.BBB.B...."];
+function mascotSvg(){const svg=document.createElementNS("http://www.w3.org/2000/svg","svg"),cols={B:"#e6f4ff",C:"#ff5a4e",E:"#12234f"};svg.setAttribute("viewBox","0 0 15 11");svg.setAttribute("shape-rendering","crispEdges");MASCOT.forEach((row,y)=>[...row].forEach((cell,x)=>{if(!cols[cell])return;const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");rect.setAttribute("x",x);rect.setAttribute("y",y);rect.setAttribute("width",1);rect.setAttribute("height",1);rect.setAttribute("fill",cols[cell]);svg.append(rect)}));return svg}
+document.getElementById("site-favicon").href=`data:image/svg+xml,${encodeURIComponent(new XMLSerializer().serializeToString(mascotSvg()))}`;
+</script>
+</body>
+</html>

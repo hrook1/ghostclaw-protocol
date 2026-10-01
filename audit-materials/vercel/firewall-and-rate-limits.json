@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-08-03T15:00:00Z",
+  "ruleName": "GhostClaw relay per IP",
+  "status": "active",
+  "paths": [
+    "/rpc",
+    "/alchemy/sponsor"
+  ],
+  "key": "source IP address",
+  "windowSeconds": 60,
+  "requests": 100,
+  "action": "HTTP 429",
+  "applicationLimits": "Shared Redis applies global, route, method, IP, sender, and weighted-call limits.",
+  "secretValuesIncluded": false
+}

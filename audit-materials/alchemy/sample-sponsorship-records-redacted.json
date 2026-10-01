@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-08-04T10:51:00Z",
+  "provider": "Alchemy Gas Manager",
+  "network": "Base Sepolia",
+  "policies": [
+    {
+      "policyName": "GhostClaw Base Sepolia Agent",
+      "policyId": "[REDACTED]",
+      "policyType": "Onchain Paymaster",
+      "minedOperations": 80,
+      "displayedSpendUsd": "0.00"
+    },
+    {
+      "policyName": "GhostClaw v1.4.2 Emergency Exit",
+      "policyId": "[REDACTED]",
+      "policyType": "Bundler Sponsored Operations",
+      "minedOperations": 3,
+      "displayedSpendUsd": "0.00"
+    }
+  ],
+  "sampleConfirmedActions": [
+    "register",
+    "confidential-payment",
+    "emergency-undelegation"
+  ],
+  "senderAddressesIncluded": false,
+  "requestDataIncluded": false,
+  "secretsIncluded": false
+}

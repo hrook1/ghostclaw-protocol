@@ -1,0 +1,14 @@
+{
+  "name": "@ghostclaw/next",
+  "version": "1.5.7",
+  "description": "GhostClaw x402 route adapter for Next.js.",
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "git+https://github.com/hrook1/ghostclaw-protocol.git" },
+  "publishConfig": { "access": "public" },
+  "type": "module",
+  "exports": "./index.mjs",
+  "files": ["index.mjs"],
+  "dependencies": { "ghostclaw": "1.5.7" },
+  "peerDependencies": { "next": ">=15" },
+  "engines": { "node": ">=22" }
+}

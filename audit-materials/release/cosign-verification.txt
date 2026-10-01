@@ -1,0 +1,7 @@
+GhostClaw release 1.4.2
+Checked: 2026-08-04T11:29:30Z
+Checksum index: ghostclaw-confidential-payments-1.4.2.tar.gz.release.sha256
+Public key: ghostclaw-release-cosign.pub
+Sigstore bundle: ghostclaw-confidential-payments-1.4.2.tar.gz.release.sha256.sigstore.json
+Command: cosign verify-blob --key ghostclaw-release-cosign.pub --bundle ghostclaw-confidential-payments-1.4.2.tar.gz.release.sha256.sigstore.json ghostclaw-confidential-payments-1.4.2.tar.gz.release.sha256
+Result: Verified OK.

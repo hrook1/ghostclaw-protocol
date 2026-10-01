@@ -1,0 +1,24 @@
+{
+  "verifiedAt": "2026-08-04T11:33:18.921Z",
+  "version": "1.4.2",
+  "sourceCommit": "0a924d0",
+  "provider": "Vercel",
+  "deploymentId": "[REDACTED FOR PUBLIC EXPORT]",
+  "deploymentOrigin": "https://ghostclaw-confidential-payments-nsy16s2d4.vercel.app",
+  "productionAlias": "https://ghostclaw-confidential-payments.vercel.app",
+  "readyState": "READY",
+  "archiveUrl": "https://ghostclaw-confidential-payments.vercel.app/downloads/ghostclaw-confidential-payments-1.4.2.tar.gz",
+  "archiveSha256": "2c2c2f367b870a577a4f2f0dea5e66fc64681cc05032698d574ff6cf1887794c",
+  "hostedArchiveMatchesSignedRelease": true,
+  "relayHealth": true,
+  "unsupportedRpcMethodRejected": true,
+  "contractRuntimeChecks": true,
+  "poolWiringChecks": true,
+  "delegationRuntimeCheck": true,
+  "secretsIncluded": false,
+  "publicExportRedactions": {
+    "fields": ["deploymentId"],
+    "reason": "Internal provider identifier removed for public source publication.",
+    "recordStatus": "Redacted historical record; not an unmodified attestation."
+  }
+}

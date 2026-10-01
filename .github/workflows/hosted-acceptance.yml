@@ -1,0 +1,63 @@
+name: Hosted acceptance
+
+on:
+  workflow_dispatch:
+    inputs:
+      relay_url:
+        description: Exact Vercel Preview or Production origin
+        required: true
+        type: string
+      confirmation:
+        description: Enter BASE_SEPOLIA to permit sponsored testnet writes
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ghostclaw-hosted-acceptance
+  cancel-in-progress: false
+
+jobs:
+  validate-input:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check the testnet confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: test "$CONFIRMATION" = "BASE_SEPOLIA"
+
+  acceptance:
+    needs: validate-input
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --global npm@11.19.0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.25.12
+          cache: true
+      - run: npm ci --ignore-scripts
+      - run: node scripts/build-native-package.mjs linux x64
+      - run: npm run test:release
+      - name: Stage and verify the pinned proving files
+        run: node scripts/stage-artifacts.mjs .ghostclaw/acceptance-artifacts
+      - name: Run the guided wallet setup twice
+        env:
+          GHOSTCLAW_ARTIFACT_DIR: ${{ github.workspace }}/.ghostclaw/acceptance-artifacts/.verification
+        run: npm run verify:guided-start -- --confirm-testnet
+      - name: Check the hosted service and Base contracts
+        env:
+          RELAY_URL: ${{ inputs.relay_url }}
+        run: npm run verify:hosted -- --relay "$RELAY_URL"
+      - name: Run one confidential paid-report flow
+        env:
+          RELAY_URL: ${{ inputs.relay_url }}
+          GHOSTCLAW_ARTIFACT_DIR: ${{ github.workspace }}/.ghostclaw/acceptance-artifacts/.verification
+        run: npm run verify:hosted-payment -- --relay "$RELAY_URL" --confirm-testnet

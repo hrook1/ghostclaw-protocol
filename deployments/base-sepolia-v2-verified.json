@@ -1,0 +1,85 @@
+{
+  "version": 2,
+  "verifiedAt": "2026-08-04T10:28:37.280Z",
+  "chainId": 84532,
+  "independentRpc": true,
+  "codeChecks": {
+    "gUSD": {
+      "address": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+      "runtimeBytes": 1726,
+      "runtimeCodeHash": "0x47326a4fff0b37a672ada529bae9e1a1459271d47e50796a56cb4041df5f55fb",
+      "independentRpcMatch": true
+    },
+    "identityVerifier": {
+      "address": "0x886c99F83E741337c947586C423117E7F26a728a",
+      "runtimeBytes": 7234,
+      "runtimeCodeHash": "0x3476c585fd48de305133b7d962196d90a4bef2c444fe5b072f837fe63e0a3260",
+      "independentRpcMatch": true
+    },
+    "depositVerifier": {
+      "address": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+      "runtimeBytes": 7234,
+      "runtimeCodeHash": "0xae2c044d83ab5fd5163075e8df58dee7b8c80a6346e3755a84faf71e55ccd1e6",
+      "independentRpcMatch": true
+    },
+    "spendVerifier": {
+      "address": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+      "runtimeBytes": 7234,
+      "runtimeCodeHash": "0x27ae3bb245686b6731911ebcf9c2760cdee8d6189e10de514b29efa0e4b4e757",
+      "independentRpcMatch": true
+    },
+    "withdrawVerifier": {
+      "address": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+      "runtimeBytes": 7229,
+      "runtimeCodeHash": "0x978985616131fdfee5d35001574acf8dad96db9f502a70440f99256e8b62352e",
+      "independentRpcMatch": true
+    },
+    "poseidon2": {
+      "address": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+      "runtimeBytes": 7585,
+      "runtimeCodeHash": "0x9d60f1447bfdfe1214a05574c13834688502d523dd76334b33d808473c5e7b97",
+      "independentRpcMatch": true
+    },
+    "pool": {
+      "address": "0x415330497f132e8D811b80c3EB96eb15B985f3C6",
+      "runtimeBytes": 12558,
+      "runtimeCodeHash": "0x71a85f494ad319d4a0c88dbf5b822a8671095a70577cd8d52e513703e37e8104",
+      "independentRpcMatch": true
+    }
+  },
+  "wiring": {
+    "token": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+    "identityVerifier": "0x886c99F83E741337c947586C423117E7F26a728a",
+    "depositVerifier": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+    "spendVerifier": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+    "withdrawVerifier": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+    "poseidon2": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b"
+  },
+  "proofChecks": {
+    "identityAccepted": true,
+    "paymentAccepted": true,
+    "withdrawalAccepted": true,
+    "changedWithdrawalAuthorizationRejected": true
+  },
+  "stateChecks": {
+    "depositRoot": true,
+    "paymentRoot": true,
+    "depositNullifier": true,
+    "withdrawalNullifier": true,
+    "paymentIntent": true,
+    "currentRoot": "2727555489157237140949755087874027950728384702213691215514955193676071521817",
+    "escrow": "490000000",
+    "tokenBalance": "490000000"
+  },
+  "successfulTransactions": [
+    "0x864bb7c38ec93e13523756c753715adbd6e77894cb0bc063329f1949d5ca6476",
+    "0xed4984abe9058509b12e45fa24db2559dc8eba163204ed0ea5cd5185c8781cf5",
+    "0xf4ac9005c1bd40ee6f713974d7ecda98d64bd347505aeed61390f5ec8378e129",
+    "0xf351fc925665a148b484bd609a7089bc16ea529d4de35a45e58d007bb3856ba4",
+    "0x64e6b5909869f61241fe2dab8c2a2be5e5d025df2e1e13de35ef37deede5feba",
+    "0x7256b4dfb7b6e2e36600c428a45d145e300a1f006186092970dc104074e29819",
+    "0xc595ef36cf144a2ea85e46070d4b85ef6ab4083df5608ccca3e274bebebee378",
+    "0xc86547dc9c4a3d85f85964c65cfee25293d05d5479b2d3a31279043ccbcf9d07",
+    "0x731a48f1d359330eb9f7c7cd6dd825abc46dc17ba82e3a8514bb954e8e6b3cc0"
+  ]
+}

@@ -1,0 +1,51 @@
+title = "GhostClaw publication rules"
+
+[extend]
+useDefault = true
+
+# A semantic review found a provider key that the generic detector missed.
+[[rules]]
+id = "provider-credential-assignment"
+description = "Hard-coded provider credential"
+regex = '''(?i)(?:alchemy|infura|etherscan|basescan|polygonscan|arbiscan|optimismscan)[a-z0-9_-]*(?:key|token)[\s"']{0,3}[:=]\s*["']?([a-z0-9_-]{16,128})'''
+secretGroup = 1
+
+# Exceptions require both the reviewed path and reviewed fixture value.
+# Do not allowlist directories, commits, or real historical credentials.
+[[allowlists]]
+description = "Deterministic Redis HMAC test key"
+condition = "AND"
+paths = ['''(^|/)scripts/relay-rate-limiter\.test\.mjs$''']
+regexes = ['''^0123456789abcdef0123456789abcdef$''']
+
+[[allowlists]]
+description = "Public EVM token address in deployment verification"
+condition = "AND"
+paths = ['''(^|/)(audit-materials/base-sepolia/contract-wiring|deployments/base-sepolia-v2-verified)\.json$''']
+regexes = ['''^0x67A288E50AD08FCa1d8dC4f65d80640a39e48760$''']
+
+[[allowlists]]
+description = "Upstream OpenZeppelin custom error names in pinned test archives"
+condition = "AND"
+paths = ['''third_party/alchemy-modular-account-v2/submodules/webauthn-sol/openzeppelin-contracts-5705e8208bc92cd82c7bcdfeac8dbc7377767d96\.tar\.gz!openzeppelin-contracts-5705e8208bc92cd82c7bcdfeac8dbc7377767d96/test/''']
+regexTarget = "match"
+regexes = ["this\\.token, ['`]ERC[0-9]+[A-Za-z]+['`]"]
+
+[[allowlists]]
+description = "Certora contract alias, not a service token"
+condition = "AND"
+paths = ['''FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5\.tar\.gz!FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/tests/WebAuthn_forge/lib/openzeppelin-contracts/certora/scripts/(WizardControlFirstPriority|verifyAll)\.sh$''']
+regexes = ['''^ERC20VotesHarness$''']
+
+[[allowlists]]
+description = "Wycheproof public DER keys, not private keys"
+condition = "AND"
+paths = ['''FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5\.tar\.gz!FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/tests/WebAuthn_forge/test/vectors_wychproof/(ecdsa_secp256r1_sha256_test|eddsa_test|vectors_valid)\.json$''']
+regexTarget = "match"
+regexes = ['''keyDer"\s*:\s*"[0-9a-f]+"''']
+
+[[allowlists]]
+description = "JWT.io John Doe example used by Solady's JSON parser test"
+condition = "AND"
+paths = ['''solady-(eb227ea1c5eaa56296e7dd713eb165d5d75891dd|e7024bee47b1623f436ee491ca9458a6dc8abce9)\.tar\.gz!solady-[0-9a-f]{40}/test/JSONParserLib\.t\.sol$''']
+regexes = ['''^eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ\.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c$''']

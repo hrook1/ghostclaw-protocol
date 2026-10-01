@@ -1,0 +1,14 @@
+{
+  "name": "@ghostclaw/hono",
+  "version": "1.5.7",
+  "description": "GhostClaw x402 middleware for Hono.",
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "git+https://github.com/hrook1/ghostclaw-protocol.git" },
+  "publishConfig": { "access": "public" },
+  "type": "module",
+  "exports": "./index.mjs",
+  "files": ["index.mjs"],
+  "dependencies": { "ghostclaw": "1.5.7" },
+  "peerDependencies": { "hono": ">=4" },
+  "engines": { "node": ">=22" }
+}

@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-08-03T15:20:00Z",
+  "rpc": "https://sepolia.base.org",
+  "chainId": 84532,
+  "pool": "0x415330497f132e8D811b80c3EB96eb15B985f3C6",
+  "context": "372939568354276673823214662859941716765610210246",
+  "wiring": {
+    "token": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+    "identityVerifier": "0x886c99F83E741337c947586C423117E7F26a728a",
+    "depositVerifier": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+    "spendVerifier": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+    "withdrawVerifier": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+    "poseidon2": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b"
+  },
+  "treeDepth": 20,
+  "rootHistorySize": 256,
+  "status": "matched-release"
+}

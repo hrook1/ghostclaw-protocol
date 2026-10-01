@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "upstreamRepository": "https://github.com/rdubois-crypto/FreshCryptoLib",
+  "upstreamCommit": "76f3f135b7b27d2aa519f265b56bfc49a2573ab5",
+  "archive": "submodules/webauthn-sol/FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5.tar.gz",
+  "originalSha256": "99e1264804f7c66fc86c42e262c293c10dc92535fc0d83d2588f80e0ad156727",
+  "sanitizedSha256": "880ea1d57e29f19bb25cfbddc541c8e07605b5151714d1a16e279d300e624381",
+  "transform": "scripts/sanitize-vendor-archive.py",
+  "normalization": {
+    "uid": 0,
+    "gid": 0,
+    "uname": "",
+    "gname": "",
+    "memberMtime": 0,
+    "gzipMtime": 0,
+    "gzipFilename": "",
+    "tarFormat": "pax"
+  },
+  "excludedPaths": [
+    {
+      "path": "FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/utils/deploy.sh",
+      "reason": "Contains embedded third-party service credentials; not used by the account build."
+    },
+    {
+      "path": "FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/tests/hardhat/res.dat",
+      "reason": "Contains an upstream test private-key log; not used by the account build."
+    }
+  ],
+  "excludedPrefixes": [
+    {
+      "path": "FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/tests/hardhat/node_modules/",
+      "reason": "Vendored test dependencies contain upstream machine metadata; unused by the account build.",
+      "excludedMemberCount": 20057,
+      "excludedPayloadBytes": 162205615
+    },
+    {
+      "path": "FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/tests/hardhat/cache/",
+      "reason": "Generated Hardhat cache contains upstream machine paths; unused by the account build.",
+      "excludedMemberCount": 2,
+      "excludedPayloadBytes": 7873
+    },
+    {
+      "path": "FreshCryptoLib-76f3f135b7b27d2aa519f265b56bfc49a2573ab5/solidity/tests/hardhat/artifacts/",
+      "reason": "Generated Hardhat test artifacts are not source and are unused by the account build.",
+      "excludedMemberCount": 42,
+      "excludedPayloadBytes": 6159149
+    }
+  ],
+  "excludedMemberCount": 20103,
+  "excludedPayloadBytes": 168382101,
+  "verification": {
+    "retainedRegularFiles": 830,
+    "retainedDirectories": 194,
+    "retainedLinks": 0,
+    "retainedPayloadBytes": 9759449,
+    "allRetainedPayloadsIdentical": true,
+    "allRetainedModesAndLinkTargetsIdentical": true,
+    "exactExcludedPathSetVerified": true,
+    "offlineRuntimeReproduction": {
+      "command": "FOUNDRY_PROFILE=optimized-build forge build --offline -j 1 src/account/SemiModularAccount7702.sol",
+      "compiler": "0.8.26",
+      "runtimeBytes": 23741,
+      "runtimeKeccak256": "0xecfc0328ce4d953a4d452e11f54b578fa2d7f2f8126246d1120ca24d11845081",
+      "exactPinnedRuntimeMatch": true,
+      "networkRequests": 0,
+      "scope": "Compared locally reproduced runtime with the existing reviewed pin; no new live-chain verification."
+    }
+  },
+  "history": "The original archive remains in the separate private development history and local quarantine. Neither that history nor the original archive is included in this new public repository."
+}

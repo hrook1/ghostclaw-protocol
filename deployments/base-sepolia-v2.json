@@ -1,0 +1,131 @@
+{
+  "version": 2,
+  "generatedAt": "2026-08-03T14:16:15.241Z",
+  "chainId": 84532,
+  "status": "live-testnet-only",
+  "productionSafe": false,
+  "model": "depth-20-append-only-note-tree",
+  "proofSystem": "Consensys gnark PLONK on BN254",
+  "projectSpecificCeremony": false,
+  "universalSrs": "Aztec Ignition",
+  "ignitionG1Sha256": "3718ffbed583d8a279ccb2545196d5618e3fd97512b65aa051d2ebd0f57fb999",
+  "operatorOwner": "0x7BD10Aa7D3f176c87B236f0b057283d62220b2F4",
+  "operatorSmartAccount": "0x1D480a1888d1cAf93f47Eb14378CeE576dEd9773",
+  "create2Deployer": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+  "setupManifestSha256": "a69b232f8b887b323908b0dc5f29baa474b1b230bb773c58fd53ef554f125803",
+  "contracts": {
+    "gUSD": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+    "identityVerifier": "0x886c99F83E741337c947586C423117E7F26a728a",
+    "depositVerifier": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+    "spendVerifier": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+    "withdrawVerifier": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+    "poseidon2": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+    "pool": "0x415330497f132e8D811b80c3EB96eb15B985f3C6"
+  },
+  "reusedContracts": {},
+  "entries": [
+    {
+      "name": "gUSD",
+      "address": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+      "salt": "0x2e1683240940cf03d498756f5144254965878d8eefd4fae0b4b146adcc0888fb",
+      "initCodeHash": "0xc1bc5f66cb9bfc8f9ed1df4df8ccd9d4d6f5cfcb49e6cd6362f4e5c847e236aa",
+      "artifactSha256": "35555b2e5464c6ea4d36416ce31e98ce95477ba326e2d1765e3ce9654dd971a7",
+      "runtimeCodeHash": "0x47326a4fff0b37a672ada529bae9e1a1459271d47e50796a56cb4041df5f55fb",
+      "runtimeBytes": 1726,
+      "userOperationHash": "0x0c96946a200c7bf319aa0b3fe51ab73f89bbc786dfb9dd5702d12ae55549e3b1",
+      "transactionHash": "0x770e25002461907ebf97e401a8dccc6642b3b0dd610a476179e9386fe8f86a79",
+      "blockNumber": 44999011,
+      "reused": false
+    },
+    {
+      "name": "identityVerifier",
+      "address": "0x886c99F83E741337c947586C423117E7F26a728a",
+      "salt": "0x097360f2b8f3692418a806005a151a2de6ea8009b7c89363ac09f23a8116372b",
+      "initCodeHash": "0xe55c15e51ff4dcf12ce32ebf013dfc93070f2c586bfbcf064ca1ec875b30eb96",
+      "artifactSha256": "049b157738116094f398767e14d406ade03fb650a350cfd5fa1c177f206c5e83",
+      "runtimeCodeHash": "0x3476c585fd48de305133b7d962196d90a4bef2c444fe5b072f837fe63e0a3260",
+      "runtimeBytes": 7234,
+      "userOperationHash": "0x5e821ad427a31f42e13adfee1a41d1b4d2be78e57eccd34897acb4803410af5c",
+      "transactionHash": "0xcd389e5e1c2b5fa387813ac2d74d264faf1c8825a41439f4d27b74931bdcd8e5",
+      "blockNumber": 44999013,
+      "reused": false
+    },
+    {
+      "name": "depositVerifier",
+      "address": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+      "salt": "0x2afcdcc32c4dc607677b7a087135b76014b1b97249bb8b078ec67c0e0f44f358",
+      "initCodeHash": "0x463855b780c0ea0432fc933a3961d111cf94138d5acba90ed0f72af4573a5481",
+      "artifactSha256": "80b072fb0c43a0eaea83378e32a9370b3bcaeb0be5d4acbea044d2cd8cc87a6c",
+      "runtimeCodeHash": "0xae2c044d83ab5fd5163075e8df58dee7b8c80a6346e3755a84faf71e55ccd1e6",
+      "runtimeBytes": 7234,
+      "userOperationHash": "0xd233f9619c591835b87a170ef11eb3bb2bb16d3a81075697382fe349c69f65b8",
+      "transactionHash": "0xdd781c3765dbab88da70f2156f237821bd4713f807919ad10b1ade4d73bf9808",
+      "blockNumber": 44999059,
+      "reused": false
+    },
+    {
+      "name": "spendVerifier",
+      "address": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+      "salt": "0xf33ab2af84e58fcc31756d277696d95e440d25aededc79cb32932999fd3c2163",
+      "initCodeHash": "0x7b1711c2ed3de238206f4ba40370ab1b2db534451b09044839f0a19a4c976afa",
+      "artifactSha256": "0690cfcf12c3215335bc8b4f5528dbc6b65087fa1319c766568de95014d801c3",
+      "runtimeCodeHash": "0x27ae3bb245686b6731911ebcf9c2760cdee8d6189e10de514b29efa0e4b4e757",
+      "runtimeBytes": 7234,
+      "userOperationHash": "0x11c54127df5c402662569155c8963166d5f880f7d56d53ec462297bd115fbfa6",
+      "transactionHash": "0x7da2f45ed2780b8baec6c625ba6022cf24065d07b9380eb20cfb4ebe5cb8d340",
+      "blockNumber": 44999060,
+      "reused": false
+    },
+    {
+      "name": "withdrawVerifier",
+      "address": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+      "salt": "0x2d1022585b70769432bed79b3c8a033ffc456b8f9593fd2a4ad47a39276dbf3b",
+      "initCodeHash": "0xee00f4f1ffd5d96806fd57a9dffd4efdf0af654924c9a3e705a4da2592ed9e76",
+      "artifactSha256": "15d379a824450d00ab2d2d7818ecfe620e5f7ad99dcde060480c3351d2e1f897",
+      "runtimeCodeHash": "0x978985616131fdfee5d35001574acf8dad96db9f502a70440f99256e8b62352e",
+      "runtimeBytes": 7229,
+      "userOperationHash": "0x2a755a547e3adf0be683913687eccb30f5bbd7562e4ba16573a456f1378a7276",
+      "transactionHash": "0x13d3759f2a52d5836fe28335e85041c47a98f49ffb3f081a895b45d1e46bed7c",
+      "blockNumber": 44999061,
+      "reused": false
+    },
+    {
+      "name": "poseidon2",
+      "address": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+      "salt": "0x21213194eeaf392dde00b432b8b996dc2e4c916aff954d6b41635478e5839e3f",
+      "initCodeHash": "0x0c8803eb114e1d0788ac2a0e4c7520febb4d469c59d8036e56ecbb98ed3c95f8",
+      "artifactSha256": "fad10a451ae716459df64c4b481f48a545d6cd1b9400cce75d856e448f4ff54b",
+      "runtimeCodeHash": "0x9d60f1447bfdfe1214a05574c13834688502d523dd76334b33d808473c5e7b97",
+      "runtimeBytes": 7585,
+      "userOperationHash": "0x03d551a383be8af654914bed95aec6f71ebac18a9e8f51f08c5010e62790e940",
+      "transactionHash": "0xd10da553576ddb5a2faaf5f9a38071370ccf0c2241019d151e4fd659aefb9c8b",
+      "blockNumber": 44999062,
+      "reused": false
+    },
+    {
+      "name": "pool",
+      "address": "0x415330497f132e8D811b80c3EB96eb15B985f3C6",
+      "salt": "0x7954894287818f48cd10c3cdf4b4c4272b9a9a13e8830c522602a2a20714b86a",
+      "initCodeHash": "0x6a9b55dddd6ce388fa08f1f1a41048d773835d68e9da20398ac90372a0f48a5b",
+      "artifactSha256": "4ae6d14b5859336d4dcfe9605dbbb5d0e15a32e759c54fd9ea736a96ea1ab9ac",
+      "runtimeCodeHash": "0x71a85f494ad319d4a0c88dbf5b822a8671095a70577cd8d52e513703e37e8104",
+      "runtimeBytes": 12558,
+      "userOperationHash": "0xb8e9a511b569a6eaf3511bef4884e6c1958878a21f9046f514f878b36cb923f9",
+      "transactionHash": "0xab297ea8c9bb40b301f5e2509a9b936d2406a4663a8855f1e3fed620e6d4b8dc",
+      "blockNumber": 44999064,
+      "reused": false
+    }
+  ],
+  "limitations": [
+    "Base Sepolia assets and sponsored gas have no market value.",
+    "The final v2 signed tag requires independent audit before a production claim.",
+    "The payment graph still reveals payer and merchant identities."
+  ],
+  "sponsorship": {
+    "provider": "Alchemy Gas Manager",
+    "mode": "bundler-sponsored-operations",
+    "changesTrustModel": false
+  },
+  "deploymentEvidenceRecoveredAt": "2026-08-03T14:21:52.495Z",
+  "deploymentEvidenceSource": "Base Sepolia EntryPoint v0.7 UserOperationEvent and first-code block"
+}

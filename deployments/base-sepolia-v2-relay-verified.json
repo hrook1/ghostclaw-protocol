@@ -1,0 +1,55 @@
+{
+  "status": "ready",
+  "checkedAt": "2026-08-04T10:59:02.247Z",
+  "chainId": 84532,
+  "relay": "https://ghostclaw-confidential-payments.vercel.app",
+  "checks": {
+    "health": true,
+    "unsupportedMethodRejected": true,
+    "contractsPresent": true,
+    "poolWiring": true,
+    "delegationRuntime": true
+  },
+  "code": {
+    "pool": {
+      "address": "0x415330497f132e8D811b80c3EB96eb15B985f3C6",
+      "bytes": 12558,
+      "hash": "0x71a85f494ad319d4a0c88dbf5b822a8671095a70577cd8d52e513703e37e8104"
+    },
+    "token": {
+      "address": "0x67A288E50AD08FCa1d8dC4f65d80640a39e48760",
+      "bytes": 1726,
+      "hash": "0x47326a4fff0b37a672ada529bae9e1a1459271d47e50796a56cb4041df5f55fb"
+    },
+    "identityVerifier": {
+      "address": "0x886c99F83E741337c947586C423117E7F26a728a",
+      "bytes": 7234,
+      "hash": "0x3476c585fd48de305133b7d962196d90a4bef2c444fe5b072f837fe63e0a3260"
+    },
+    "depositVerifier": {
+      "address": "0x70C8e535b3A0f25E0e7127F25097AaF83F8832b2",
+      "bytes": 7234,
+      "hash": "0xae2c044d83ab5fd5163075e8df58dee7b8c80a6346e3755a84faf71e55ccd1e6"
+    },
+    "spendVerifier": {
+      "address": "0xBb12FB3bBdcf0e77f63b0c5a52A1C62Cd51DcbdC",
+      "bytes": 7234,
+      "hash": "0x27ae3bb245686b6731911ebcf9c2760cdee8d6189e10de514b29efa0e4b4e757"
+    },
+    "withdrawalVerifier": {
+      "address": "0xd0ba5592E6b9443b7cdD2a71c2287eB283f59b8c",
+      "bytes": 7229,
+      "hash": "0x978985616131fdfee5d35001574acf8dad96db9f502a70440f99256e8b62352e"
+    },
+    "poseidon2": {
+      "address": "0xB2bFD7988D6b7695a54aC4864C4106242a4da21b",
+      "bytes": 7585,
+      "hash": "0x9d60f1447bfdfe1214a05574c13834688502d523dd76334b33d808473c5e7b97"
+    },
+    "delegation": {
+      "address": "0x69007702764179f14F51cdce752f4f775d74E139",
+      "bytes": 23741,
+      "hash": "0xecfc0328ce4d953a4d452e11f54b578fa2d7f2f8126246d1120ca24d11845081"
+    }
+  }
+}

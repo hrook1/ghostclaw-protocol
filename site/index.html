@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GhostClaw gives x402 agents confidential payment amounts on Base.">
+<link rel="icon" id="site-favicon" type="image/svg+xml">
+<title>GhostClaw | Confidential x402 payments</title>
+<style>
+  :root{
+    --bg:#020307;--paper:#f0f3f8;--muted:#8993a4;--dim:#3d4657;
+    --blue:#4b86ff;--blue-hi:#9fc3ff;--line:#161c29;--panel:#060912;
+    --display:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    --text:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;
+    --s1:8px;--s2:13px;--s3:21px;--s4:34px;--s5:55px;--s6:89px;--s7:144px;
+    --gutter:clamp(21px,3.4vw,55px);--page:1440px;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{width:100%;min-height:100%;background:var(--bg);scroll-behavior:smooth;overflow-x:hidden}
+  body{position:relative;width:100%;min-height:100svh;padding:6.25svh 0;background:var(--bg);color:var(--paper);
+    font-family:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  button,input{font:inherit}
+  .site-field{position:absolute;z-index:0;inset:0;overflow:hidden;background:var(--bg)}
+  .site-field canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .site-field::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 110% 100% at 50% 50%,transparent 48%,rgba(0,2,8,.32) 78%,rgba(0,1,5,.68) 100%)}
+  .fx-fallback{position:absolute;inset:0;display:none;
+    background:radial-gradient(ellipse 55% 65% at 72% 46%,rgba(47,123,255,.32),transparent 68%),
+               radial-gradient(ellipse 40% 45% at 82% 70%,rgba(125,180,255,.16),transparent 70%)}
+  .no-webgl .fx-fallback{display:block}
+  .no-webgl .site-field canvas{display:none}
+  .glass-shell{position:relative;z-index:2;isolation:isolate;width:75vw;margin:0 auto;overflow:hidden;
+    border:1px solid rgba(224,237,255,.27);border-radius:clamp(21px,1.35vw,34px);
+    background:rgba(8,13,23,.38);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 1px 0 0 rgba(255,255,255,.06),
+               inset 0 -1px 0 rgba(117,164,255,.1),0 34px 89px rgba(0,0,0,.52),0 0 55px rgba(46,104,231,.08);
+    -webkit-backdrop-filter:blur(28px) saturate(152%) brightness(.9);backdrop-filter:blur(28px) saturate(152%) brightness(.9)}
+  .glass-shell::before{content:"";position:absolute;z-index:0;inset:1px;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012) 34%,rgba(255,255,255,.018));
+    box-shadow:inset 0 0 60px rgba(170,204,255,.025)}
+  .glass-shell > *{position:relative;z-index:1}
+  .page{width:min(100%,var(--page));margin:auto;padding-inline:var(--gutter)}
+  .mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.18em}
+  .eyebrow{font:700 10px/1.4 var(--mono);letter-spacing:.21em;text-transform:uppercase;color:var(--blue-hi)}
+  .muted{color:var(--muted)}
+  .outline{color:transparent;-webkit-text-stroke:1px rgba(159,195,255,.62);letter-spacing:0}
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .85s cubic-bezier(.16,1,.3,1)}
+  .rv.in{opacity:1;transform:none}
+
+  /* ===== navigation ===== */
+  .nav{position:absolute;z-index:6;inset:0 0 auto;display:grid;grid-template-columns:1fr auto 1fr;
+    align-items:center;padding:var(--s3) var(--gutter);border-bottom:1px solid rgba(159,195,255,.1)}
+  .brand-lockup{display:flex;align-items:center;gap:11px;flex-shrink:0}
+  .brand-lockup svg{display:block;shape-rendering:crispEdges;filter:drop-shadow(0 0 6px rgba(110,200,255,.55))}
+  .brand-mascot svg{width:30px;height:auto}
+  .brand-col{display:flex;flex-direction:column}
+  .brand-word svg{width:118px;height:auto}
+  .nav-center{display:flex;gap:var(--s4);font:700 9px/1 var(--mono);letter-spacing:.2em;color:var(--muted)}
+  .nav-center a:hover{color:var(--paper)}
+
+  /* ===== hero ===== */
+  .hero{position:relative;min-height:100%;display:grid;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero-grid{position:relative;z-index:3;min-height:87.5svh;display:grid;
+    grid-template-columns:minmax(0,1.618fr) minmax(300px,1fr);grid-template-rows:1fr;
+    column-gap:clamp(55px,5.5vw,89px);padding-top:var(--s7);padding-bottom:var(--s6)}
+  .hero-copy{align-self:center}
+  h1,.display{font-family:var(--display);font-stretch:condensed;text-transform:uppercase;font-weight:900;
+    letter-spacing:-.055em;line-height:.88}
+  h1{font-size:clamp(62px,6vw,108px);max-width:10.2ch;margin-top:var(--s3)}
+  .hero-intro{max-width:36ch;margin-top:var(--s4);color:#b4bdcb;font-size:16px;line-height:1.618}
+  .hero-intro b{color:var(--paper);font-weight:650}
+
+  .runway{justify-self:center;width:min(890px,100%);position:relative;text-align:center}
+  .run-label{font:700 10px/1 var(--mono);letter-spacing:.21em;color:var(--blue-hi);text-transform:uppercase;margin-bottom:var(--s2)}
+  .command{display:grid;grid-template-columns:1fr auto;align-items:center;background:rgba(4,7,14,.91);
+    border:1px solid rgba(159,195,255,.34);box-shadow:0 20px 70px rgba(0,0,0,.45),0 0 45px rgba(75,134,255,.08)}
+  .command code{padding:var(--s3) var(--s4);text-align:left;color:var(--paper);font:600 clamp(13px,1.25vw,18px)/1 var(--mono);white-space:nowrap;overflow-x:auto}
+  .command code::before{content:"$ ";color:var(--blue)}
+  .copy{align-self:stretch;min-width:108px;border:0;border-left:1px solid rgba(159,195,255,.25);background:transparent;
+    color:var(--blue-hi);cursor:pointer;font:700 9px/1 var(--mono);letter-spacing:.2em}
+  .copy:hover,.copy:focus-visible{background:rgba(75,134,255,.13);outline:0}
+  .run-note{margin-top:var(--s2);color:#687286;font:600 9px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+
+  /* ===== shared editorial grammar ===== */
+  .chapter{position:relative;border-bottom:1px solid var(--line);padding:clamp(89px,8vw,144px) 0}
+  .chapter-index{position:absolute;top:var(--s3);left:var(--gutter);font:700 9px/1 var(--mono);letter-spacing:.21em;color:#455066}
+  .chapter-index b{color:var(--blue-hi);font-weight:700}
+  h2{font:800 clamp(48px,4.5vw,84px)/.94 var(--display);font-stretch:condensed;letter-spacing:-.05em;text-transform:uppercase}
+  .body{max-width:46ch;color:#aab4c4;font-size:16px;line-height:1.618}
+  .body b,.hero-intro b{color:var(--paper);font-weight:650}
+  .body a{color:var(--blue-hi);border-bottom:1px solid rgba(159,195,255,.45)}
+  .caption{color:#5f697b;font:600 9px/1.75 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+
+  /* ===== hero eye ===== */
+  .eye-stage{position:relative;align-self:center;justify-self:end;aspect-ratio:1;width:min(100%,520px)}
+  .eye-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair;
+    filter:saturate(1.34) brightness(1.18) drop-shadow(0 0 18px rgba(75,134,255,.34)) drop-shadow(0 0 48px rgba(110,190,255,.14))}
+  .eye-tag{position:absolute;right:0;bottom:0;left:0;text-align:center;font:700 9px var(--mono);letter-spacing:.2em;color:#68758a;text-transform:uppercase;pointer-events:none}
+
+  /* ===== seal ===== */
+  .seal-head{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(280px,1fr);gap:var(--s6);align-items:end}
+  .seal-head h2{max-width:12ch}
+  .seal-head .body{justify-self:end}
+  .ledger{margin-top:var(--s6);border-top:1px solid rgba(159,195,255,.26);font-family:var(--mono)}
+  .ledger-row{display:grid;grid-template-columns:90px minmax(220px,1fr) minmax(170px,.52fr) 120px;gap:24px;
+    align-items:center;min-height:68px;border-bottom:1px solid var(--line);font-size:12px;color:#b7c1d0}
+  .ledger-row.head{min-height:42px;color:#515d72;font-size:8px;letter-spacing:.2em;text-transform:uppercase}
+  .ledger-row > :nth-child(3),.ledger-row > :nth-child(4){text-align:right}
+  .ledger-amount{font-variant-numeric:tabular-nums;transition:color .35s ease,filter .35s ease}
+  .ledger-amount.sealed{color:var(--blue-hi);letter-spacing:.18em;filter:drop-shadow(0 0 8px rgba(75,134,255,.42))}
+  .settled{color:#6f9fff;font-size:9px;letter-spacing:.16em}
+  .seal-foot{display:flex;justify-content:space-between;gap:var(--s4);margin-top:var(--s3)}
+
+  /* ===== flow ===== */
+  .flow-top{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(260px,1fr);gap:var(--s6);align-items:end}
+  .flow-top h2{max-width:11ch}
+  .flow-top .body{justify-self:end}
+  .flow{margin-top:var(--s6);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #283247}
+  .flow-step{position:relative;padding:var(--s4) var(--s4) var(--s1) 0;border-right:1px solid var(--line);min-height:233px}
+  .flow-step:not(:first-child){padding-left:var(--s4)}
+  .flow-step:last-child{border-right:0}
+  .flow-step::before{content:"";position:absolute;top:-6px;left:0;width:11px;height:11px;border:1px solid var(--blue-hi);background:var(--bg);box-shadow:0 0 16px rgba(75,134,255,.35)}
+  .flow-step:not(:first-child)::before{left:var(--s4)}
+  .flow-n{font:700 9px/1 var(--mono);letter-spacing:.22em;color:#59657a}
+  .flow-step h3{margin-top:var(--s3);font:800 34px/.95 var(--display);text-transform:uppercase;letter-spacing:-.04em}
+  .flow-step p{margin-top:var(--s2);max-width:25ch;color:#8e99aa;font-size:13px;line-height:1.618}
+  .flow-step strong{display:block;margin-top:var(--s3);color:var(--blue-hi);font:700 8px/1.5 var(--mono);letter-spacing:.17em;text-transform:uppercase}
+
+  /* ===== evidence ===== */
+  .evidence{padding-bottom:0}
+  .evidence-intro{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(280px,1fr);gap:var(--s6);align-items:end}
+  .evidence-intro h2{max-width:13ch;font-size:clamp(38px,3.25vw,60px);line-height:.96}
+  .evidence-intro .body{justify-self:end}
+  .measurements{margin-top:var(--s6);border-top:1px solid rgba(159,195,255,.28)}
+  .measure{display:grid;grid-template-columns:88px minmax(250px,.72fr) minmax(220px,.72fr) 1fr;align-items:center;
+    min-height:148px;border-bottom:1px solid var(--line)}
+  .measure-id{font:700 9px/1 var(--mono);letter-spacing:.22em;color:#4d596e}
+  .measure-value{font:900 clamp(38px,4.25vw,68px)/.86 var(--display);letter-spacing:-.035em;text-transform:uppercase}
+  .measure-unit{font:700 11px/1.6 var(--mono);letter-spacing:.16em;color:var(--blue-hi);text-transform:uppercase}
+  .measure-copy{max-width:40ch;color:#8792a4;font-size:13px;line-height:1.65;justify-self:end}
+  .evidence-note{padding:22px 0 28px;color:#4c576b;font:600 8px/1.7 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+
+  /* ===== demo ===== */
+  .demo{position:relative;overflow:hidden;display:grid;align-items:center;border-bottom:1px solid var(--line)}
+  .demo-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.618fr) minmax(280px,1fr);
+    gap:clamp(55px,5.5vw,89px);align-items:center;padding-top:var(--s7);padding-bottom:var(--s7)}
+  .install-stage{position:relative;min-height:460px;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(159,195,255,.2);
+    background:linear-gradient(135deg,rgba(118,160,255,.11),rgba(6,9,18,.05) 38%,rgba(97,142,255,.13) 68%,rgba(2,4,9,.14));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 34px 80px rgba(0,0,0,.32)}
+  .install-stage::before,.install-stage::after{content:"";position:absolute;width:74%;height:170%;top:-34%;transform:rotate(33deg);pointer-events:none}
+  .install-stage::before{left:-32%;background:linear-gradient(90deg,transparent,rgba(126,173,255,.11),transparent)}
+  .install-stage::after{right:-36%;background:linear-gradient(90deg,transparent,rgba(224,238,255,.07),transparent)}
+  .install-terminal{position:relative;z-index:1;width:81%;border:1px solid rgba(202,222,255,.31);border-radius:21px;
+    background:rgba(2,4,9,.9);box-shadow:0 34px 60px rgba(0,0,0,.52),inset 0 1px 0 rgba(255,255,255,.055);overflow:hidden}
+  .terminal-bar{display:flex;align-items:center;gap:9px;height:54px;padding:0 20px;border-bottom:1px solid rgba(159,195,255,.12)}
+  .terminal-bar i{width:11px;height:11px;border-radius:50%;background:#3c4350}.terminal-bar i:first-child{background:#596273}
+  .terminal-label{margin-left:auto;color:#4d596d;font:700 8px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase}
+  .install-terminal .command{border:0;border-bottom:1px solid rgba(159,195,255,.16);box-shadow:none;background:transparent}
+  .install-terminal .command code{padding:29px 25px;font-size:clamp(12px,1vw,15px)}
+  .install-terminal .copy{min-width:88px}
+  .install-output{display:grid;gap:14px;padding:24px 25px 27px;color:#768195;font:600 9px/1.45 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .install-output span{display:grid;grid-template-columns:22px 1fr auto;gap:9px;align-items:center}
+  .install-output b{color:var(--blue-hi);font-weight:700}.install-output em{color:#59657a;font-style:normal}
+  .demo-copy{align-self:center}.demo h2{max-width:8ch;margin-top:var(--s3)}
+  .demo .body{margin-top:var(--s4)}
+  .demo-points{display:grid;gap:13px;margin-top:var(--s4);color:#687489;font:700 9px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+  .demo-points span::before{content:"+";color:var(--blue);margin-right:10px}
+
+  /* ===== access ===== */
+  .access{padding:var(--s7) 0 var(--s6)}
+  .access-grid{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(320px,1fr);gap:var(--s6);align-items:end}
+  .access h2{max-width:10ch}
+  .access-copy{justify-self:end;width:100%}
+  .access-copy p{color:#8f9aac;font-size:15px;line-height:1.65;max-width:40ch}
+  .form{display:grid;grid-template-columns:1fr auto;margin-top:30px;border-bottom:1px solid #4b5870}
+  .form-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .form input{min-width:0;height:58px;background:transparent;border:0;color:var(--paper);outline:0;
+    font:600 11px/1 var(--mono);letter-spacing:.12em}
+  .form input::placeholder{color:#515c70}
+  .form button{border:0;background:transparent;color:var(--blue-hi);cursor:pointer;
+    font:700 9px/1 var(--mono);letter-spacing:.18em}
+  .form-status{min-height:18px;margin-top:13px;color:#657187;font:700 8px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+  footer{display:flex;justify-content:space-between;gap:var(--s4);margin-top:var(--s7);padding-top:var(--s3);border-top:1px solid var(--line);
+    color:#4f5a6e;font:700 8px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+
+  @media(max-width:900px){
+    /* Mobile browser chrome changes the visual viewport during scroll. Keep the field on the stable large viewport. */
+    .site-field{position:fixed;inset:0 auto auto 0;width:100%;height:100vh;height:100lvh;contain:strict;transform:translateZ(0)}
+    body{padding:12px 0}.glass-shell{width:calc(100% - 24px);border-radius:20px}
+    .nav{grid-template-columns:1fr auto}.nav-center{grid-column:2;gap:var(--s3)}.nav-section{display:none}
+    .hero-grid{min-height:calc(100svh - 24px);grid-template-columns:1fr;padding-top:144px}.hero-copy{padding-bottom:0}
+    .hero .eye-stage{width:min(82vw,470px);margin:0 auto}.runway{align-self:end}.command code{padding:20px 18px}.copy{min-width:86px}
+    .seal-head,.flow-top,.evidence-intro,.demo-inner,.access-grid{grid-template-columns:1fr;gap:55px}
+    .eye-stage{min-height:330px}.seal-head .body,.flow-top .body,.evidence-intro .body,.access-copy{justify-self:start}
+    .ledger-row{grid-template-columns:70px minmax(140px,1fr) 130px}.ledger-row > :last-child{display:none}
+    .flow{grid-template-columns:1fr 1fr}.flow-step:nth-child(2){border-right:0}.flow-step{border-bottom:1px solid var(--line)}
+    .measure{grid-template-columns:54px 1fr;gap:18px;padding:36px 0}.measure-unit,.measure-copy{grid-column:2;justify-self:start}
+    .measure-value{font-size:48px}.demo{min-height:auto}.install-stage{min-height:400px}.access-copy{width:100%}
+  }
+  @media(max-width:560px){
+    body{padding:0}
+    /* One viewport-sized glass sheet avoids a very tall blurred layer and removes exposed background bands. */
+    .glass-shell{width:100%;min-height:100lvh;border:0;border-radius:0;background:transparent;box-shadow:none;
+      -webkit-backdrop-filter:none;backdrop-filter:none}
+    .glass-shell::before{position:fixed;inset:0;border-radius:0;
+      background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(8,13,23,.5) 34%,rgba(8,13,23,.54) 72%,rgba(117,164,255,.035));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(159,195,255,.12),inset 0 -1px 0 rgba(117,164,255,.09);
+      -webkit-backdrop-filter:blur(22px) saturate(145%) brightness(.88);backdrop-filter:blur(22px) saturate(145%) brightness(.88)}
+    .hero-grid{min-height:calc(100svh - 12px)}
+    .brand-mascot svg{width:24px}.brand-word svg{width:94px}
+    .nav{padding-inline:var(--s3)}.nav-center{gap:13px;font-size:8px;letter-spacing:.12em}
+    .hero-grid{padding-top:110px;padding-bottom:var(--s5);row-gap:var(--s4)}h1{font-size:55px}.hero-intro{font-size:15px}
+    .command{grid-template-columns:minmax(0,1fr)}.copy{min-height:44px;border-left:0;border-top:1px solid rgba(159,195,255,.2)}
+    .install-stage{min-height:340px}.install-terminal{width:88%;border-radius:15px}.terminal-bar{height:46px}.install-output span{grid-template-columns:18px 1fr}.install-output em{display:none}
+    .eye-stage{min-height:250px}
+    h2{font-size:52px}.ledger-row{grid-template-columns:58px 1fr 112px;gap:12px;font-size:9px}
+    .flow{grid-template-columns:1fr}.flow-step{border-right:0}.flow-step:not(:first-child){padding-left:0}.flow-step:not(:first-child)::before{left:0}
+    .form{grid-template-columns:1fr}.form button{text-align:left;padding:18px 0}
+    footer{flex-direction:column;margin-top:80px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="site-field" aria-hidden="true"><canvas id="fx"></canvas><div class="fx-fallback"></div></div>
+<div class="glass-shell" id="glass-shell">
+
+<header class="hero" id="top">
+  <nav class="nav">
+    <a class="brand-lockup" href="#top" aria-label="GhostClaw home">
+      <span class="brand-mascot" id="brand-mascot" aria-hidden="true"></span>
+      <span class="brand-col"><span class="brand-word" id="brand-word"></span></span>
+    </a>
+    <span class="nav-center">
+      <a class="nav-section" href="#privacy">PRIVACY</a>
+      <a class="nav-section" href="#system">SYSTEM</a>
+      <a class="nav-section" href="#evidence">PERFORMANCE</a>
+      <a class="nav-external" href="docs/index.html" target="_blank" rel="noopener noreferrer">DOCS ↗</a>
+      <a class="nav-external" href="https://x.com/_Ghostclaw" target="_blank" rel="noopener noreferrer" aria-label="GhostClaw on X">X ↗</a>
+    </span>
+  </nav>
+  <div class="page hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">A new era of agentic commerce</div>
+      <h1>Agents pay.<br><span class="outline">Price stays private.</span></h1>
+      <p class="hero-intro">GhostClaw enables robust agentic marketplaces using x402 and a confidential settlement layer. <b>Payment amounts and account balances are hidden.</b> Public identities preserve merchant reputations, mimicking real-world commerce.</p>
+    </div>
+    <div class="eye-stage" id="eye-stage">
+      <canvas id="eye" aria-label="A watching eye assembles from particles of public payment data" role="img"></canvas>
+      <span class="eye-tag" aria-hidden="true">THE MACHINES SEE EVERYTHING</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="chapter" id="privacy">
+    <span class="chapter-index"><b>01</b> / The privacy boundary</span>
+    <div class="page">
+      <div class="seal-head rv">
+        <h2>Keep your reputation. <span class="outline">And your privacy.</span></h2>
+        <p class="body">Users can preserve payer and merchant identities. <b>GhostClaw’s zero-knowledge layer hides the payment amount and private balances behind a local proof.</b></p>
+      </div>
+      <div class="ledger rv" id="ledger">
+        <div class="ledger-row head"><span>Time</span><span>Payer / Merchant</span><span>Amount</span><span>State</span></div>
+        <div class="ledger-row"><span>14:02:11</span><span>0x83f1…21c4 / report.service</span><span class="ledger-amount">24.80 gUSD</span><span class="settled">SETTLED ✓</span></div>
+        <div class="ledger-row"><span>14:02:38</span><span>0x9ab0…77e2 / compute.market</span><span class="ledger-amount">112.00 gUSD</span><span class="settled">SETTLED ✓</span></div>
+        <div class="ledger-row"><span>14:03:05</span><span>0x83f1…21c4 / data.feed</span><span class="ledger-amount">8.25 gUSD</span><span class="settled">SETTLED ✓</span></div>
+        <div class="ledger-row"><span>14:03:41</span><span>0x44c7…09af / report.service</span><span class="ledger-amount">24.80 gUSD</span><span class="settled">SETTLED ✓</span></div>
+      </div>
+      <div class="seal-foot caption rv"><span>Identity: available</span><span>Amount: sealed</span></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="system">
+    <span class="chapter-index"><b>02</b> / The payment path</span>
+    <div class="page">
+      <div class="flow-top rv">
+        <h2>x402 runs. <span class="outline">Amount stays private.</span></h2>
+        <p class="body">GhostClaw adds a private payment proof to the x402 request. <b>The merchant verifies settlement before it releases the service.</b></p>
+      </div>
+      <div class="flow rv">
+        <article class="flow-step"><div class="flow-n">01 / REQUEST</div><h3>Quote</h3><p>The merchant returns an x402 payment requirement.</p><strong>Merchant stays public</strong></article>
+        <article class="flow-step"><div class="flow-n">02 / LOCAL</div><h3>Prove</h3><p>The payer creates the payment proof on its machine.</p><strong>Keys and notes stay local</strong></article>
+        <article class="flow-step"><div class="flow-n">03 / BASE</div><h3>Settle</h3><p>The Base contract verifies the proof and updates public commitments.</p><strong>Amount stays unreadable</strong></article>
+        <article class="flow-step"><div class="flow-n">04 / SERVICE</div><h3>Continue</h3><p>The merchant confirms settlement and releases the resource.</p><strong>x402 response resumes</strong></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter evidence" id="evidence">
+    <span class="chapter-index"><b>03</b> / Performance</span>
+    <div class="page">
+      <div class="evidence-intro rv">
+        <h2>Local proving reduces latency.</h2>
+        <p class="body">As Ghostclaw optimises its proving stack, latency will decrease; <b>techniques such as batching may allow for large reductions in verification costs, which will open up new design spaces for trading and microtransaction services.</b></p>
+      </div>
+      <div class="measurements rv">
+        <div class="measure"><span class="measure-id">01</span><strong class="measure-value">0.78 s</strong><span class="measure-unit">Median payment proof</span><p class="measure-copy">Twenty local payment proofs ran on the reference machine. The 95th percentile was 0.839 seconds.</p></div>
+        <div class="measure"><span class="measure-id">02</span><strong class="measure-value">768 B</strong><span class="measure-unit">Fixed proof size</span><p class="measure-copy">Identity, deposit, payment, and withdrawal proofs use the same fixed byte length.</p></div>
+        <div class="measure"><span class="measure-id">03</span><strong class="measure-value">1.20 M</strong><span class="measure-unit">Payment transaction gas</span><p class="measure-copy">The recorded Base Sepolia payment used 1,195,268 gas, including verification and state updates.</p></div>
+        <div class="measure"><span class="measure-id">04</span><strong class="measure-value">$0.011</strong><span class="measure-unit">Recorded fee estimate</span><p class="measure-copy">The historical Base fee estimate used the recorded gas price and ETH price.</p></div>
+      </div>
+      <p class="evidence-note">Our testnet benchmarks for proof generation as well as round-trip transaction performance.</p>
+    </div>
+  </section>
+
+  <section class="demo" id="demo">
+    <div class="page demo-inner rv">
+      <div class="install-stage" aria-label="GhostClaw installation command">
+        <div class="install-terminal">
+          <div class="terminal-bar"><i></i><i></i><i></i><span class="terminal-label">Local setup</span></div>
+          <div class="command">
+            <code>npx -y ghostclaw@1.5.7 start</code>
+            <button class="copy" type="button" data-copy="npx -y ghostclaw@1.5.7 start">COPY</button>
+          </div>
+          <div class="install-output" aria-hidden="true">
+            <span><b>01</b>Encrypted local wallet<em>Ready</em></span>
+            <span><b>02</b>Agent connection<em>Ready</em></span>
+            <span><b>03</b>Base transactions<em>Sponsored</em></span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-copy">
+        <div class="eyebrow">Live on Base Sepolia</div>
+        <h2>Start your journey.</h2>
+        <p class="body"><b>One command prepares a local wallet and opens a supported agent.</b> You can also ask your agent to read our <a href="docs/index.html" target="_blank" rel="noopener noreferrer">documentation</a> to understand the technical details.</p>
+        <div class="demo-points"><span>Plug and play</span><span>Encrypted local wallet</span><span>Sponsored transactions</span><span>Claude Code or Codex</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="access" id="access">
+    <div class="page">
+      <div class="access-grid rv">
+        <div><div class="eyebrow">Exclusive access</div><h2>We are the private wrapper for x402.</h2></div>
+        <div class="access-copy">
+          <p>Join the waitlist for early access to merchant tools, agent integration, and more.</p>
+          <form class="form" id="access-form">
+            <label for="email" style="position:absolute;left:-9999px">Email address</label>
+            <label class="form-trap" for="company">Company<input id="company" name="_gotcha" type="text" autocomplete="off" tabindex="-1"></label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="EMAIL ADDRESS" required>
+            <button id="access-submit" type="submit">JOIN COMMUNITY →</button>
+          </form>
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+      <footer><span>© GhostClaw 2026</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></footer>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+"use strict";
+
+/* ===== approved pixel brand ===== */
+const PF={
+  G:[".XXXXX.","XX...XX","XX.....","XX.XXXX","XX...XX","XX...XX",".XXXXX."],
+  H:["XX...XX","XX...XX","XX...XX","XXXXXXX","XX...XX","XX...XX","XX...XX"],
+  O:[".XXXXX.","XX...XX","XX...XX","XX...XX","XX...XX","XX...XX",".XXXXX."],
+  S:[".XXXXX.","XX...XX","XX.....",".XXXXX.",".....XX","XX...XX",".XXXXX."],
+  T:["XXXXXXX","..XX...","..XX...","..XX...","..XX...","..XX...","..XX..."],
+  C:[".XXXXX.","XX...XX","XX.....","XX.....","XX.....","XX...XX",".XXXXX."],
+  L:["XX.....","XX.....","XX.....","XX.....","XX.....","XX.....","XXXXXXX"],
+  A:[".XXXXX.","XX...XX","XX...XX","XXXXXXX","XX...XX","XX...XX","XX...XX"],
+  W:["XX...XX","XX...XX","XX...XX","XX.X.XX","XXXXXXX","XXX.XXX","XX...XX"]
+};
+const MASCOT=[
+  "......BBB......",".....BBBBB.....","C.C.BBBBBBB.C.C","CCC.BBEBBEB.CCC",".C..BBEBBEB..C.",
+  "..C.BBBBBBB.C..","...CBBBBBBBC...","....BBBBBBB....","....BBBBBBB....","....BBBBBBB....","....B.BBB.B...."
+];
+function brandSvg(viewBox, label){
+  const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  svg.setAttribute("viewBox",viewBox);svg.setAttribute("shape-rendering","crispEdges");
+  if(label){svg.setAttribute("role","img");svg.setAttribute("aria-label",label)}else svg.setAttribute("aria-hidden","true");
+  return svg;
+}
+function wordmarkSvg(){
+  const text="GHOSTCLAW",adv=8,svg=brandSvg(`0 0 ${text.length*adv-1} 7`,text);
+  [...text].forEach((letter,index)=>PF[letter].forEach((row,y)=>[...row].forEach((cell,x)=>{
+    if(cell!=="X")return;const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
+    rect.setAttribute("x",index*adv+x);rect.setAttribute("y",y);rect.setAttribute("width",1);rect.setAttribute("height",1);rect.setAttribute("fill","#cfe9ff");svg.append(rect);
+  })));
+  return svg;
+}
+function mascotSvg(){
+  const svg=brandSvg("0 0 15 11"),cols={B:"#e6f4ff",C:"#ff5a4e",E:"#12234f"};
+  MASCOT.forEach((row,y)=>[...row].forEach((cell,x)=>{if(!cols[cell])return;const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
+    rect.setAttribute("x",x);rect.setAttribute("y",y);rect.setAttribute("width",1);rect.setAttribute("height",1);rect.setAttribute("fill",cols[cell]);svg.append(rect)}));
+  return svg;
+}
+const brandMascot=mascotSvg();
+document.getElementById("brand-mascot").append(brandMascot);
+/* Use the approved mascot itself as the tab icon. The transparent SVG lets the browser supply its own surface. */
+document.getElementById("site-favicon").href=`data:image/svg+xml,${encodeURIComponent(new XMLSerializer().serializeToString(brandMascot))}`;
+document.getElementById("brand-word").append(wordmarkSvg());
+
+/* ===== chromatic-waves halftone field — vanilla WebGL2 port of the supplied OGL component ===== */
+/* approved field: calm luminous ribbons, slow drift */
+const FIELD_HERO = {
+  frequency: 3.5,    // ui 1..10  -> noise scale (low = large calm forms)
+  speed: 0.35,       // ui        -> uSpeed = ui * 0.05 (low = slow drift)
+  cellSize: 6,       // ui 1..100 -> px cell 6..60 (fine scanline matter)
+  gamma: 11,         // ui 1..20  -> 0.5..8 (high = more black void)
+  paletteBias: -0.5, // ui        -> ui * 0.05
+  cellAspect: 2.6,   // horizontal cell stretch: dots become scanline dashes
+  dashSquash: 0.5,   // widens each mark into a dash
+  haloStrength: 0.6, // soft per-cell phosphor bloom
+  fps: 30,
+  palette: ["#030b20","#082566","#1247c2","#2f7bff","#6babff","#c4e0ff","#ffffff","#ffffff"]
+};
+/* quieter instance behind the waitlist close */
+const FIELD_ACCESS = Object.assign({}, FIELD_HERO, { frequency: 3, gamma: 12.5, speed: 0.3, fps: 24 });
+
+const PERLIN_VS = `#version 300 es
+in vec2 uv; in vec2 position; out vec2 vUv;
+void main(){ vUv = uv; gl_Position = vec4(position,0.,1.); }`;
+
+const PERLIN_FS = `#version 300 es
+precision mediump float;
+uniform float uFrequency; uniform float uTime; uniform float uSpeed; uniform float uValue;
+uniform vec2 uResolution; uniform float uViewportHeight; in vec2 vUv; out vec4 fragColor;
+vec3 mod289(vec3 x){ return x - floor(x * (1.0/289.0)) * 289.0; }
+vec4 mod289(vec4 x){ return x - floor(x * (1.0/289.0)) * 289.0; }
+vec4 permute(vec4 x){ return mod289(((x*34.0)+1.0)*x); }
+vec4 taylorInvSqrt(vec4 r){ return 1.79284291400159 - 0.85373472095314 * r; }
+float snoise(vec3 v){
+  const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+  const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec3 i = floor(v + dot(v, C.yyy));
+  vec3 x0 = v - i + dot(i, C.xxx);
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min(g.xyz, l.zxy);
+  vec3 i2 = max(g.xyz, l.zxy);
+  vec3 x1 = x0 - i1 + C.xxx;
+  vec3 x2 = x0 - i2 + C.yyy;
+  vec3 x3 = x0 - D.yyy;
+  i = mod289(i);
+  vec4 p = permute(permute(permute(i.z + vec4(0.0,i1.z,i2.z,1.0)) + i.y + vec4(0.0,i1.y,i2.y,1.0)) + i.x + vec4(0.0,i1.x,i2.x,1.0));
+  float n_ = 0.142857142857;
+  vec3 ns = n_ * D.wyz - D.xzx;
+  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+  vec4 x_ = floor(j * ns.z);
+  vec4 y_ = floor(j - 7.0 * x_);
+  vec4 x = x_ * ns.x + ns.yyyy;
+  vec4 y = y_ * ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 b0 = vec4(x.xy, y.xy);
+  vec4 b1 = vec4(x.zw, y.zw);
+  vec4 s0 = floor(b0)*2.0 + 1.0;
+  vec4 s1 = floor(b1)*2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+  vec3 p0 = vec3(a0.xy, h.x);
+  vec3 p1 = vec3(a0.zw, h.y);
+  vec3 p2 = vec3(a1.xy, h.z);
+  vec3 p3 = vec3(a1.zw, h.w);
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m * m;
+  return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+}
+vec3 hsv2rgb(vec3 c){
+  vec4 K = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
+  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+void main(){
+  vec2 pixel = vUv * uResolution;
+  float scale = max(uViewportHeight, 1.0);
+  vec2 uv = pixel / scale;
+  float hue = abs(snoise(vec3(uv * uFrequency, uTime * uSpeed)));
+  vec3 rainbowColor = hsv2rgb(vec3(hue, 1.0, uValue));
+  fragColor = vec4(rainbowColor, 1.0);
+}`;
+
+const DOT_VS = `#version 300 es
+in vec2 uv; in vec2 position; out vec2 vUv;
+void main(){ vUv = uv; gl_Position = vec4(position,0.,1.); }`;
+
+const DOT_FS = `#version 300 es
+precision highp float;
+uniform vec2 uResolution; uniform sampler2D uTexture;
+uniform int uPaletteCount; uniform vec3 uPalette[10]; uniform float uPaletteAlpha[10];
+uniform float uCellSize; uniform float uGamma; uniform float uPaletteBias;
+uniform float uCellAspect; uniform float uDashSquash; uniform float uHalo;
+out vec4 fragColor;
+void main(){
+  vec2 pix = gl_FragCoord.xy;
+  float cell = max(uCellSize, 1.0);
+  vec2 cellSz = vec2(cell * max(uCellAspect, 0.25), cell);
+  vec2 cellIdx = floor(pix / cellSz);
+  vec2 cellCenter = (cellIdx + 0.5) * cellSz;
+  vec3 col = texture(uTexture, cellCenter / uResolution.xy).rgb;
+  float gray = 0.3*col.r + 0.59*col.g + 0.11*col.b;
+  gray = pow(clamp(gray, 0.0001, 1.0), uGamma);
+  vec2 cellUV = fract(pix / cellSz) - 0.5;
+  float dist = length(cellUV * vec2(uDashSquash, 1.0));
+  float radius = clamp(gray + uPaletteBias, 0.0, 1.0) * 0.5;
+  float aa = fwidth(dist) + 1e-4;
+  float mark = 1.0 - smoothstep(radius - aa, radius + aa, dist);
+  /* soft phosphor halo confined to the cell so hot crests bloom */
+  float halo = (1.0 - smoothstep(0.0, 0.72, dist)) * uHalo * clamp(gray + uPaletteBias, 0.0, 1.0);
+  mark = clamp(mark + halo, 0.0, 1.0);
+  float g2 = clamp(gray + uPaletteBias, 0.0, 1.0);
+  int cnt = max(uPaletteCount, 1);
+  vec3 dotCol; float dotOpacity;
+  if(cnt <= 1){ dotCol = uPalette[0]; dotOpacity = uPaletteAlpha[0]; }
+  else{
+    float scaled = g2 * float(cnt - 1);
+    int seg = int(floor(scaled));
+    seg = clamp(seg, 0, cnt - 2);
+    float f = clamp(scaled - float(seg), 0.0, 1.0);
+    dotCol = mix(uPalette[seg], uPalette[seg+1], f);
+    dotOpacity = mix(uPaletteAlpha[seg], uPaletteAlpha[seg+1], f);
+  }
+  fragColor = vec4(dotCol, mark * dotOpacity);
+}`;
+
+/* mapping functions preserved from the source component */
+function mapLinear(v,a,b,c,d){ if(b===a) return c; return c + ((v-a)/(b-a))*(d-c); }
+function hexToRgb(h){
+  const s = h.replace('#','');
+  return [parseInt(s.slice(0,2),16)/255, parseInt(s.slice(2,4),16)/255, parseInt(s.slice(4,6),16)/255];
+}
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function createField(canvas, cfg){
+  const gl = canvas.getContext('webgl2',{alpha:true, premultipliedAlpha:false, antialias:false});
+  if(!gl){ document.body.classList.add('no-webgl'); return null; }
+
+  const shaderFrequency = mapLinear(cfg.frequency,1,10,0.3,6);
+  const shaderSpeed = cfg.speed * 0.05;
+  const shaderCell = mapLinear(cfg.cellSize,1,100,6,60);
+  const shaderGamma = mapLinear(cfg.gamma,1,20,0.5,8);
+  const shaderBias = cfg.paletteBias * 0.05;
+
+  function compile(type, src){
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src); gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){ console.error(gl.getShaderInfoLog(sh)); return null; }
+    return sh;
+  }
+  function makeProgram(vsSrc, fsSrc){
+    const p = gl.createProgram();
+    const vs = compile(gl.VERTEX_SHADER, vsSrc);
+    const fs = compile(gl.FRAGMENT_SHADER, fsSrc);
+    if(!vs || !fs) return null;
+    gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+    if(!gl.getProgramParameter(p, gl.LINK_STATUS)){ console.error(gl.getProgramInfoLog(p)); return null; }
+    return p;
+  }
+  const perlinProg = makeProgram(PERLIN_VS, PERLIN_FS);
+  const dotProg = makeProgram(DOT_VS, DOT_FS);
+  if(!perlinProg || !dotProg){ document.body.classList.add('no-webgl'); return null; }
+
+  const quadPos = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
+  const quadUv  = new Float32Array([ 0,0,  1,0,  0,1,  1,1]);
+  function bindQuad(prog){
+    const posLoc = gl.getAttribLocation(prog,'position');
+    const uvLoc = gl.getAttribLocation(prog,'uv');
+    const posBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf); gl.bufferData(gl.ARRAY_BUFFER, quadPos, gl.STATIC_DRAW);
+    const uvBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf); gl.bufferData(gl.ARRAY_BUFFER, quadUv, gl.STATIC_DRAW);
+    const vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf); gl.enableVertexAttribArray(posLoc); gl.vertexAttribPointer(posLoc,2,gl.FLOAT,false,0,0);
+    if(uvLoc >= 0){ gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf); gl.enableVertexAttribArray(uvLoc); gl.vertexAttribPointer(uvLoc,2,gl.FLOAT,false,0,0); }
+    gl.bindVertexArray(null);
+    return vao;
+  }
+  const perlinVao = bindQuad(perlinProg);
+  const dotVao = bindQuad(dotProg);
+
+  let fbTex = null, fb = null, fbW = 0, fbH = 0;
+  function ensureTarget(w,h){
+    if(w === fbW && h === fbH && fb) return;
+    if(fbTex) gl.deleteTexture(fbTex);
+    if(fb) gl.deleteFramebuffer(fb);
+    fbTex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, fbTex);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    fb = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,fbTex,0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    fbW = w; fbH = h;
+  }
+
+  const pu = {
+    time: gl.getUniformLocation(perlinProg,'uTime'),
+    freq: gl.getUniformLocation(perlinProg,'uFrequency'),
+    speed: gl.getUniformLocation(perlinProg,'uSpeed'),
+    value: gl.getUniformLocation(perlinProg,'uValue'),
+    res: gl.getUniformLocation(perlinProg,'uResolution'),
+    viewH: gl.getUniformLocation(perlinProg,'uViewportHeight')
+  };
+  const du = {
+    res: gl.getUniformLocation(dotProg,'uResolution'),
+    tex: gl.getUniformLocation(dotProg,'uTexture'),
+    cnt: gl.getUniformLocation(dotProg,'uPaletteCount'),
+    pal: gl.getUniformLocation(dotProg,'uPalette[0]') || gl.getUniformLocation(dotProg,'uPalette'),
+    alp: gl.getUniformLocation(dotProg,'uPaletteAlpha[0]') || gl.getUniformLocation(dotProg,'uPaletteAlpha'),
+    cell: gl.getUniformLocation(dotProg,'uCellSize'),
+    gam: gl.getUniformLocation(dotProg,'uGamma'),
+    bias: gl.getUniformLocation(dotProg,'uPaletteBias'),
+    aspect: gl.getUniformLocation(dotProg,'uCellAspect'),
+    squash: gl.getUniformLocation(dotProg,'uDashSquash'),
+    halo: gl.getUniformLocation(dotProg,'uHalo')
+  };
+
+  const MAX_COLORS = 10;
+  const palRgb = new Float32Array(MAX_COLORS*3);
+  const palAlpha = new Float32Array(MAX_COLORS);
+  cfg.palette.slice(0,MAX_COLORS).forEach((hex,i)=>{
+    const [r,g,b] = hexToRgb(hex);
+    palRgb[i*3]=r; palRgb[i*3+1]=g; palRgb[i*3+2]=b; palAlpha[i]=1;
+  });
+  const palCount = Math.min(MAX_COLORS, cfg.palette.length);
+
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  const maxTexture = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+  const pixelBudget = 12000000; /* keep the full-document field within the viewport renderer's original workload */
+  const mobileViewport = matchMedia('(max-width:900px)').matches;
+  let renderScale = dpr;
+  function resize(){
+    const cssW = Math.max(1, canvas.clientWidth), cssH = Math.max(1, canvas.clientHeight);
+    renderScale = Math.min(dpr,maxTexture/cssW,maxTexture/cssH,Math.sqrt(pixelBudget/(cssW*cssH)));
+    const w = Math.max(1, Math.round(cssW * renderScale));
+    const h = Math.max(1, Math.round(cssH * renderScale));
+    if(canvas.width !== w || canvas.height !== h){ canvas.width = w; canvas.height = h; }
+    ensureTarget(w,h);
+  }
+
+  function draw(timeMs){
+    resize();
+    const w = canvas.width, h = canvas.height;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.viewport(0,0,w,h);
+    gl.disable(gl.BLEND);
+    gl.useProgram(perlinProg);
+    gl.uniform1f(pu.time, timeMs*0.001);
+    gl.uniform1f(pu.freq, shaderFrequency);
+    gl.uniform1f(pu.speed, shaderSpeed);
+    gl.uniform1f(pu.value, 1);
+    gl.uniform2f(pu.res, w, h);
+    /* On mobile, canvas.clientHeight comes from 100lvh and stays stable while browser chrome opens or closes. */
+    gl.uniform1f(pu.viewH, (mobileViewport ? canvas.clientHeight : window.innerHeight) * renderScale);
+    gl.bindVertexArray(perlinVao);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0,0,w,h);
+    gl.clearColor(0,0,0,0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(dotProg);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, fbTex);
+    gl.uniform1i(du.tex, 0);
+    gl.uniform2f(du.res, w, h);
+    gl.uniform1i(du.cnt, palCount);
+    gl.uniform3fv(du.pal, palRgb);
+    gl.uniform1fv(du.alp, palAlpha);
+    gl.uniform1f(du.cell, shaderCell * renderScale / 2);
+    gl.uniform1f(du.gam, shaderGamma);
+    gl.uniform1f(du.bias, shaderBias);
+    gl.uniform1f(du.aspect, cfg.cellAspect);
+    gl.uniform1f(du.squash, cfg.dashSquash);
+    gl.uniform1f(du.halo, cfg.haloStrength);
+    gl.bindVertexArray(dotVao);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  const frameInterval = 1000 / cfg.fps;
+  let last = 0, visible = true, running = false;
+  function loop(t){
+    if(!running) return;
+    if(visible && t - last >= frameInterval){ last = t; draw(t); }
+    requestAnimationFrame(loop);
+  }
+
+  if(REDUCED){
+    draw(12000); /* one composed still frame */
+    addEventListener('resize', ()=>draw(12000), {passive:true});
+  } else {
+    running = true;
+    requestAnimationFrame(loop);
+  }
+  return { setVisible(v){ visible = v; } };
+}
+
+const heroField = createField(document.getElementById('fx'), FIELD_HERO);
+
+/* pause the field when the page is not visible */
+if(!REDUCED && 'IntersectionObserver' in window){
+  const gate = new IntersectionObserver(entries => entries.forEach(e => {
+    if(e.target.id === 'fx' && heroField) heroField.setVisible(e.isIntersecting);
+  }), {threshold: 0});
+  gate.observe(document.getElementById('fx'));
+}
+
+/* ===== the observer — particle eye (vanilla port of the supplied ParticleImage component) =====
+   founder's Originkit params: count 50 · size 5 · circle · original colours ·
+   hover: roam (eye assembles on approach) · repulsion: random · force 22 · radius 110 */
+(function(){
+  const stage = document.getElementById('eye-stage');
+  const canvas = document.getElementById('eye');
+  if(!stage || !canvas) return;
+  const ctx = canvas.getContext('2d');
+  const COARSE = matchMedia('(hover: none)').matches;
+  const FORCED = REDUCED || /assembled/.test(location.search);
+
+  const CFG = { count:50, size:5, durMs:800, roamOpacity:.5, repForce:22, repRadius:110 };
+  const easeInOut = t => t < .5 ? 2*t*t : 1 - 2*(1-t)*(1-t);
+
+  /* procedural iris in the page's blue ramp — swap for a photo by drawing it here instead */
+  function makeEyeSource(w, h){
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d');
+    const size = Math.min(w, h), cx = w/2, cy = h/2;
+    const R = size*.47, pup = size*.155, collar = size*.24;
+    const cols = ['#11419b','#1c56c8','#2871f1','#3d8cff','#72b5ff','#b4d8ff','#f2f8ff'];
+    for(let i = 0; i < 950; i++){
+      const a = (i/950)*Math.PI*2 + (Math.random()-.5)*.02;
+      const r0 = pup*(1+Math.random()*.06);
+      const r1 = R*(.84+Math.random()*.16);
+      g.beginPath();
+      const steps = 6;
+      for(let s = 0; s <= steps; s++){
+        const t = s/steps, rr = r0+(r1-r0)*t;
+        const wob = Math.sin(i*12.9898 + t*7.3) + Math.sin(i*3.7 + t*13.1);
+        const aa = a + wob*.02*t;
+        const x = cx + Math.cos(aa)*rr, y = cy + Math.sin(aa)*rr;
+        if(s){ g.lineTo(x,y); } else { g.moveTo(x,y); }
+      }
+      const b = Math.random();
+      g.strokeStyle = cols[Math.floor(b*b*cols.length)];
+      g.globalAlpha = .36 + Math.random()*.56;
+      g.lineWidth = 1.15 + Math.random()*1.9;
+      g.stroke();
+    }
+    g.globalAlpha = 1;
+    g.globalCompositeOperation = 'lighter';
+    const ring = g.createRadialGradient(cx,cy,pup*.9, cx,cy,collar*1.5);
+    ring.addColorStop(0,'rgba(220,240,255,.72)');
+    ring.addColorStop(.45,'rgba(95,174,255,.28)');
+    ring.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle = ring;
+    g.beginPath(); g.arc(cx,cy,collar*1.55,0,Math.PI*2); g.fill();
+    g.globalCompositeOperation = 'destination-out';
+    const fade = g.createRadialGradient(cx,cy,R*.76, cx,cy,R);
+    fade.addColorStop(0,'rgba(0,0,0,0)'); fade.addColorStop(1,'rgba(0,0,0,1)');
+    g.fillStyle = fade; g.fillRect(0,0,w,h);
+    g.beginPath(); g.arc(cx,cy,pup,0,Math.PI*2); g.fillStyle = 'rgba(0,0,0,1)'; g.fill();
+    g.globalCompositeOperation = 'source-over';
+    g.fillStyle = '#e8f2ff';
+    g.beginPath(); g.arc(cx+pup*.38, cy-pup*.34, size*.016, 0, Math.PI*2); g.fill();
+    return c;
+  }
+
+  let W = 0, H = 0, dpr = 1, particles = [], state = 'idle';
+  let animStart = 0, fadeStart = 0, fadeFrom = 1, fadeTo = 1, animTimer = null, visible = true;
+  const mouse = {x:-99999, y:-99999, active:false};
+  const randPoint = () => [Math.random()*W, Math.random()*H];
+
+  function build(){
+    W = Math.round(stage.clientWidth); H = Math.round(stage.clientHeight);
+    if(!W || !H) return;
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
+    const off = makeEyeSource(W, H);
+    const px = off.getContext('2d').getImageData(0,0,W,H).data;
+    const gap = Math.max(2, Math.round(150/CFG.count));
+    const src = [];
+    for(let y = 0; y < H; y += gap) for(let x = 0; x < W; x += gap){
+      const i = (y*W+x)*4;
+      if(px[i+3] >= 20) src.push({x, y, r:px[i], g:px[i+1], b:px[i+2], a:px[i+3]});
+    }
+    for(let i = src.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); const t = src[i]; src[i] = src[j]; src[j] = t; }
+    particles = src.map(s => {
+      const start = FORCED ? [s.x, s.y] : randPoint();
+      const targ = randPoint();
+      return {
+        x:start[0], y:start[1], vx:(Math.random()-.5)*1.2, vy:(Math.random()-.5)*1.2,
+        startX:start[0], startY:start[1], homeX:s.x, homeY:s.y,
+        tx:targ[0], ty:targ[1],
+        repX:0, repY:0, inZone:false, rtX:0, rtY:0,
+        r:s.r, g:s.g, b:s.b, a:s.a
+      };
+    });
+    state = FORCED ? 'active' : 'idle';
+  }
+
+  function startAnim(next){
+    particles.forEach(p => { p.startX = p.x; p.startY = p.y; });
+    fadeStart = Date.now();
+    if(next === 'assembling'){ fadeFrom = CFG.roamOpacity; fadeTo = 1; }
+    else { fadeFrom = 1; fadeTo = CFG.roamOpacity; }
+    if(next === 'scattering'){
+      /* roam mode skips the scatter tween — particles deform straight back into roaming */
+      particles.forEach(p => { const t = randPoint(); p.tx = t[0]; p.ty = t[1]; });
+      clearTimeout(animTimer);
+      state = 'idle';
+      return;
+    }
+    animStart = Date.now();
+    state = next;
+    clearTimeout(animTimer);
+    animTimer = setTimeout(() => { if(state === next) state = 'active'; }, CFG.durMs);
+  }
+
+  let idata = null, bW = 0, bH = 0;
+  function frame(){
+    if(!visible || !particles.length) return;
+    const PW = canvas.width, PH = canvas.height;
+    if(!idata || bW !== PW || bH !== PH){ idata = ctx.createImageData(PW, PH); bW = PW; bH = PH; }
+    idata.data.fill(0);
+    const buf = idata.data;
+    const ps = Math.max(1, Math.ceil((CFG.size/4)*dpr));
+    const half = ps/2;
+    const animT = easeInOut(Math.min(1, (Date.now()-animStart)/CFG.durMs));
+    const fadeT = fadeStart ? easeInOut(Math.min(1, (Date.now()-fadeStart)/CFG.durMs)) : 1;
+    const roamMul = fadeStart ? (fadeFrom + (fadeTo-fadeFrom)*fadeT) : CFG.roamOpacity;
+    const cutoffSq = CFG.repRadius*CFG.repRadius;
+    for(const p of particles){
+      let bx = p.x, by = p.y;
+      if(state === 'assembling'){ bx = p.startX + (p.homeX-p.startX)*animT; by = p.startY + (p.homeY-p.startY)*animT; }
+      else if(state === 'active'){ bx = p.homeX; by = p.homeY; }
+      else {
+        const dtx = p.tx-p.x, dty = p.ty-p.y;
+        if(dtx*dtx+dty*dty < 9){ const t = randPoint(); p.tx = t[0]; p.ty = t[1]; }
+        p.vx = p.vx*.98 + (p.tx-p.x)*.003;
+        p.vy = p.vy*.98 + (p.ty-p.y)*.003;
+        const sp = Math.hypot(p.vx, p.vy);
+        if(sp > 1.5){ p.vx = p.vx/sp*1.5; p.vy = p.vy/sp*1.5; }
+        p.x += p.vx; p.y += p.vy;
+        bx = p.x; by = p.y;
+      }
+      /* repulsion — random mode: particles inside the radius jump to an organic random offset */
+      if(!FORCED && mouse.active){
+        const dx = bx-mouse.x, dy = by-mouse.y;
+        if(dx*dx+dy*dy < cutoffSq){
+          if(!p.inZone){
+            const ang = Math.random()*Math.PI*2, d = Math.random()*CFG.repForce*5;
+            p.rtX = Math.cos(ang)*d; p.rtY = Math.sin(ang)*d;
+            p.inZone = true;
+          }
+          p.repX += (p.rtX-p.repX)*.15;
+          p.repY += (p.rtY-p.repY)*.15;
+        } else { p.inZone = false; }
+      } else { p.inZone = false; }
+      if(!p.inZone){ p.repX *= .97; p.repY *= .97; }
+      p.x = bx + p.repX; p.y = by + p.repY;
+      const da = state === 'active' ? p.a : Math.round(p.a * roamMul);
+      if(da < 1) continue;
+      const px0 = Math.round(p.x*dpr) - (ps>>1), py0 = Math.round(p.y*dpr) - (ps>>1);
+      for(let dy2 = 0; dy2 < ps; dy2++){
+        const iy = py0+dy2; if(iy < 0 || iy >= PH) continue;
+        const row = iy*PW;
+        for(let dx2 = 0; dx2 < ps; dx2++){
+          const ddx = dx2-half+.5, ddy = dy2-half+.5;
+          if(ddx*ddx+ddy*ddy > half*half) continue;
+          const ix = px0+dx2; if(ix < 0 || ix >= PW) continue;
+          const i4 = (row+ix)*4;
+          buf[i4] = p.r; buf[i4+1] = p.g; buf[i4+2] = p.b; buf[i4+3] = da;
+        }
+      }
+    }
+    ctx.putImageData(idata, 0, 0);
+  }
+
+  build();
+  if(REDUCED){
+    frame();
+  } else {
+    (function loop(){ requestAnimationFrame(loop); frame(); })();
+  }
+  if('ResizeObserver' in window){
+    let rw = W, rh = H;
+    new ResizeObserver(() => {
+      if(Math.round(stage.clientWidth) !== rw || Math.round(stage.clientHeight) !== rh){
+        rw = Math.round(stage.clientWidth); rh = Math.round(stage.clientHeight);
+        build(); if(REDUCED) frame();
+      }
+    }).observe(stage);
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; }), {threshold:0}).observe(stage);
+    /* the eye assembles once on arrival and stays focused — the observer is already watching */
+    if(!FORCED){
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if(e.isIntersecting){ startAnim('assembling'); io.disconnect(); }
+      }), {threshold:.45});
+      io.observe(stage);
+    }
+  } else if(!FORCED){
+    startAnim('assembling');
+  }
+  if(!FORCED && !COARSE){
+    /* the cursor disturbs the eye; it always re-forms */
+    canvas.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = (e.clientX-rect.left) * (rect.width ? W/rect.width : 1);
+      mouse.y = (e.clientY-rect.top) * (rect.height ? H/rect.height : 1);
+      mouse.active = true;
+    });
+    canvas.addEventListener('mouseleave', () => {
+      mouse.x = -99999; mouse.y = -99999; mouse.active = false;
+    });
+  }
+})();
+
+
+/* ===== privacy seal ===== */
+const amountNodes=[...document.querySelectorAll(".ledger-amount")];
+const originalAmounts=amountNodes.map(node=>node.textContent);
+const glyphs="▓▒░#@%&*?";
+let sealTimer=0;
+function scrambleAmounts(){
+  let tick=0;clearInterval(sealTimer);
+  sealTimer=setInterval(()=>{
+    amountNodes.forEach((node,index)=>{
+      if(tick>10+index*2){node.textContent="SEALED";node.classList.add("sealed");return}
+      node.textContent=Array.from(originalAmounts[index]).map(ch=>ch===" "?" ":glyphs[Math.random()*glyphs.length|0]).join("");
+    });
+    tick++;if(tick>18)clearInterval(sealTimer);
+  },72);
+}
+const ledger=document.getElementById("ledger");
+if(REDUCED){amountNodes.forEach(node=>{node.textContent="SEALED";node.classList.add("sealed")})}
+else new IntersectionObserver(entries=>{if(entries[0].isIntersecting){scrambleAmounts()}},{threshold:.55}).observe(ledger);
+
+/* ===== controls ===== */
+document.querySelectorAll(".copy").forEach(button=>button.addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText(button.dataset.copy);button.textContent="COPIED"}
+  catch{button.textContent="SELECT COMMAND"}
+  setTimeout(()=>button.textContent="COPY",1800);
+}));
+
+const ACCESS_ENDPOINT="https://usebasin.com/f/83c0bfd40f71";
+const accessForm=document.getElementById("access-form");
+const accessStatus=document.getElementById("form-status");
+const accessSubmit=document.getElementById("access-submit");
+accessForm.addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!accessForm.reportValidity()||accessSubmit.disabled)return;
+  accessSubmit.disabled=true;
+  accessSubmit.textContent="SENDING";
+  accessStatus.textContent="SENDING YOUR ACCESS REQUEST.";
+  try{
+    const response=await fetch(ACCESS_ENDPOINT,{method:"POST",headers:{Accept:"application/json"},body:new FormData(accessForm)});
+    if(!response.ok)throw new Error(`Basin returned ${response.status}.`);
+    accessForm.reset();
+    accessSubmit.textContent="REQUEST RECEIVED";
+    accessStatus.textContent="YOUR ACCESS REQUEST WAS RECEIVED.";
+  }catch{
+    accessSubmit.disabled=false;
+    accessSubmit.textContent="RETRY →";
+    accessStatus.textContent="THE REQUEST COULD NOT BE SENT. TRY AGAIN.";
+  }
+});
+
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("in")}),{threshold:.12});
+document.querySelectorAll(".rv").forEach(node=>revealObserver.observe(node));
+
+</script>
+</body>
+</html>

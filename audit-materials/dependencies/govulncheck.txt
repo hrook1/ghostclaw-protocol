@@ -1,0 +1,5 @@
+GhostClaw release 1.4.2
+Checked: 2026-08-04
+Go toolchain: 1.25.12
+Command: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+Reachable vulnerabilities: 0

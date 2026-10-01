@@ -1,0 +1,5 @@
+GhostClaw release 1.4.2
+Checked: 2026-08-04
+Command: npm ci && npm audit --omit=dev
+Resolved packages: 106
+Known vulnerabilities: 0

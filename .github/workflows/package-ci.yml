@@ -1,0 +1,109 @@
+name: Package CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --global npm@11.19.0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.25.12
+          cache: true
+      - run: npm ci --ignore-scripts
+      - run: node scripts/build-native-package.mjs linux x64
+      - run: npm run test:release
+      - run: npm run verify:public-artifacts
+      - run: npm audit --omit=dev
+      - run: go test ./...
+      - run: go test -race ./...
+      - run: go vet ./...
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.6.0 ./...
+
+  contracts-and-artifacts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.25.12
+          cache: true
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.7.1
+      - run: forge fmt --check
+      - run: forge build --sizes
+      - run: forge test --offline
+      - run: ./scripts/verify-reproducible-artifacts.sh
+
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            platform: darwin
+            arch: x64
+          - runner: macos-15
+            platform: darwin
+            arch: arm64
+          - runner: ubuntu-24.04
+            platform: linux
+            arch: x64
+          - runner: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+          - runner: windows-2025
+            platform: win32
+            arch: x64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: npm install --global npm@11.19.0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.25.12
+          cache: true
+      - run: node scripts/build-native-package.mjs ${{ matrix.platform }} ${{ matrix.arch }}
+      - run: node scripts/verify-native-package.mjs packages/prover-${{ matrix.platform }}-${{ matrix.arch }} ${{ matrix.platform }} ${{ matrix.arch }}
+      - name: Pack native package
+        shell: bash
+        run: |
+          mkdir -p release/packages
+          npm pack "./packages/prover-${{ matrix.platform }}-${{ matrix.arch }}" \
+            --pack-destination release/packages \
+            --cache .ghostclaw/npm-cache
+      - name: Test clean package installation
+        run: node scripts/test-native-install.mjs ${{ matrix.platform }} ${{ matrix.arch }}
+      - name: Test Linux private-group package permissions
+        if: matrix.platform == 'linux'
+        shell: bash
+        run: |
+          sudo useradd --create-home --user-group ghostclaw-package-test
+          test_source="/home/ghostclaw-package-test/source"
+          sudo mkdir -p "$test_source"
+          sudo cp -R . "$test_source"
+          sudo chown -R ghostclaw-package-test:ghostclaw-package-test "$test_source"
+          sudo -u ghostclaw-package-test -H node "$test_source/scripts/test-native-install.mjs" \
+            ${{ matrix.platform }} ${{ matrix.arch }} --group-write
+      - uses: actions/upload-artifact@v6
+        with:
+          name: prover-${{ matrix.platform }}-${{ matrix.arch }}
+          path: release/packages/*.tgz
+          if-no-files-found: error
+          retention-days: 7

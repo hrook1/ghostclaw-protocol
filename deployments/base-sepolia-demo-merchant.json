@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "status": "live-testnet-only",
+  "network": "base-sepolia",
+  "merchant": "0xec21AA844B1b2fFbB23feD4dC11fE93ecfa6940a",
+  "owner": "14104055537525496209371569591763306853227586020182003432620071059082853920645",
+  "noteEncryptionPublicKey": "MCowBQYDK2VuAyEAfLIUDEUbpKhLtEykxfPWAx6DLGAOjxGO3lUHY9Ookgw=",
+  "registeredAt": "2026-08-07T10:52:17.202Z",
+  "registrationTransactionHash": "0xa4b52eb1b5b12fb29cbf6d5360e491aea17d41edb87b890fae353fc90ed18340"
+}

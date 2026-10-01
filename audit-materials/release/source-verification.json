@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-08-04T11:27:47Z",
+  "release": "1.4.2",
+  "scope": "source and local build",
+  "externalAudit": false,
+  "checks": {
+    "cleanNpmInstall": "passed",
+    "npmKnownVulnerabilities": 0,
+    "javascriptSecurityTests": {
+      "passed": 62,
+      "failed": 0
+    },
+    "goTests": "passed",
+    "goRaceDetector": "passed",
+    "goVet": "passed",
+    "goReachableVulnerabilities": 0,
+    "solidityTests": {
+      "passed": 24,
+      "failed": 0
+    },
+    "solidityFormat": "passed",
+    "typescriptCheck": "passed",
+    "proofArtifactsReproduce": true,
+    "generatedVerifiersReproduceAfterCanonicalFormatting": true,
+    "alchemyDelegationRuntimeReproduces": true
+  },
+  "runtimeBytecode": {
+    "poolBytes": 12558,
+    "identityVerifierBytes": 7234,
+    "depositVerifierBytes": 7234,
+    "spendVerifierBytes": 7234,
+    "withdrawVerifierBytes": 7229,
+    "poseidon2Bytes": 7585,
+    "testTokenBytes": 1726,
+    "evmRuntimeLimitBytes": 24576
+  },
+  "note": "This is operator-generated release evidence. It is not an independent security audit."
+}
